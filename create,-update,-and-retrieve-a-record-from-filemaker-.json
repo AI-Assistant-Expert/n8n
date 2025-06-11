@@ -1,0 +1,334 @@
+{
+  "createdAt": "2025-04-08T17:54:11.550Z",
+  "updatedAt": "2025-06-04T17:14:28.000Z",
+  "id": "FGzLT13JvDn62naF",
+  "name": "Create, update, and retrieve a record from FileMaker",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=User Input:  {{ $json.chatInput || $json.message.text || $json.query.request}}.\n\nCurrent time: {{ $now.toLocal().toString() }}\n  ",
+        "options": {
+          "systemMessage": "You are a helpful assistant. Look at the user query and you need to find answers to that from the buffer or tools available with you. \n\nYou will trigger FileMaker tool to find the user data if it doesn't exist in the buffer/memory.\n\nYour reply to any query has to be precise of what asked and don't need to ask users for more questions.",
+          "returnIntermediateSteps": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        560,
+        -60
+      ],
+      "id": "ed64afda-5bef-4fc6-8685-dabc53ed624f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        180,
+        80
+      ],
+      "id": "686a1bf3-9976-4e59-aa43-b25d1d3958cf",
+      "name": "When chat message received",
+      "webhookId": "aab83bdd-6f44-4324-a557-0fb50a8b4f4e"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        480,
+        240
+      ],
+      "id": "50e86d97-ba4c-4ca5-9204-2f99cd96dc60",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "VQW5a5RxoMGI5sua",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "action": "find",
+        "layout": "Patient Input",
+        "getPortals": true,
+        "portals": [
+          "Appointments",
+          []
+        ],
+        "responseLayout": "Patient Input",
+        "queries": {
+          "query": [
+            {
+              "fields": {
+                "field": [
+                  {
+                    "name": "FullName",
+                    "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Value', ``, 'string') }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.filemakerTool",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        200
+      ],
+      "id": "03ae9dd2-875e-4b5a-85fe-c6338f55d3cf",
+      "name": "FileMaker4",
+      "credentials": {
+        "fileMaker": {
+          "id": "rWya9w9d9Y12AdQM",
+          "name": "FileMaker account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        180,
+        -120
+      ],
+      "id": "50c3cc6a-9cb6-48fd-9197-4863776c97c0",
+      "name": "Telegram Trigger",
+      "webhookId": "34894733-ad4a-428b-b981-c643de5dbc8a",
+      "credentials": {
+        "telegramApi": {
+          "id": "sslWHJKXvCbOv6Ab",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1340,
+        -200
+      ],
+      "id": "3a41d169-f03a-4dcd-8ee1-250193907605",
+      "name": "Telegram",
+      "webhookId": "646d4a6d-c508-4686-b629-4f166f9eccfa",
+      "credentials": {
+        "telegramApi": {
+          "id": "sslWHJKXvCbOv6Ab",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.message?.chat.id || \"test\" }}",
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        660,
+        220
+      ],
+      "id": "4f75d82e-9487-4c5b-9b2d-d5ba791076e3",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {
+        "action": "find",
+        "layout": "Patient Input",
+        "getPortals": "",
+        "responseLayout": "Patient Input",
+        "queries": {
+          "query": [
+            {
+              "fields": {
+                "field": [
+                  {
+                    "name": "FullName",
+                    "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Value', `You need to find the IDReferral from the user data tool ID`, 'string') }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.filemakerTool",
+      "typeVersion": 1,
+      "position": [
+        900,
+        200
+      ],
+      "id": "7be252ca-e2d3-4eb0-b79f-021597b5666f",
+      "name": "Appointment",
+      "credentials": {
+        "fileMaker": {
+          "id": "rWya9w9d9Y12AdQM",
+          "name": "FileMaker account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "7ac79dc1-e636-42d7-8c3f-91a1f254c31a",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        180,
+        320
+      ],
+      "id": "8b4e5d09-c4de-4d04-a171-31c08984814f",
+      "name": "Webhook",
+      "webhookId": "7ac79dc1-e636-42d7-8c3f-91a1f254c31a"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1340,
+        40
+      ],
+      "id": "c69f28a7-049b-48e5-9d44-6e0c8a833286",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FileMaker4": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Appointment": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateId": "1068",
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "aeb75b8a-6dd9-4d1b-a3a1-af03981372e8",
+  "triggerCount": 4,
+  "tags": []
+}
