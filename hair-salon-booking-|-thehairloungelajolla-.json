@@ -1,0 +1,270 @@
+{
+  "createdAt": "2025-04-01T16:12:12.971Z",
+  "updatedAt": "2025-04-30T17:31:50.000Z",
+  "id": "jIyPKdJqH3P8a3tG",
+  "name": "Hair Salon Booking | thehairloungelajolla",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "id": "fbf5feee-02c9-46fe-9117-fec7620e5933",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -100,
+        380
+      ],
+      "typeVersion": 1.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "VQW5a5RxoMGI5sua",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "**AI Agent 👇**\nThe Prompt is already there, You just need to setup the prompt user message with your text message.",
+        "height": 141,
+        "width": 194,
+        "color": 7
+      },
+      "id": "25c9f5eb-fe61-424f-bf95-002be5b9c29e",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "**Chat Model ☝️**\nAdd your Open Ai API Key ",
+        "height": 80,
+        "width": 150,
+        "color": 7
+      },
+      "id": "c11f23c5-1fc7-4397-892a-5ebc90d4131f",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -140,
+        520
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "**Gpoogle Calendar ☝️**\nConnect to Google Calendar",
+        "height": 80,
+        "width": 190,
+        "color": 7
+      },
+      "id": "28c11e83-63a4-44c1-bb27-b7d7b49d040d",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        220,
+        520
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "**Google Sheets ☝️**\nConnect to Google Sheets",
+        "height": 80,
+        "width": 190,
+        "color": 7
+      },
+      "id": "f2b92176-71c0-4dc6-a279-e478135acd2e",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        480,
+        520
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "resource": "calendar",
+        "calendar": {
+          "__rl": true,
+          "value": "aiagentsinc@gmail.com",
+          "mode": "list",
+          "cachedResultName": "aiagentsinc@gmail.com"
+        },
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start_Time', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End_Time', ``, 'string') }}",
+        "options": {}
+      },
+      "id": "44320e35-cb8c-443d-b589-22a435479068",
+      "name": "Check Availability",
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "position": [
+        180,
+        380
+      ],
+      "typeVersion": 1.3,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "VOZZ5vJAU8kHP1sO",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "aiagentsinc@gmail.com",
+          "mode": "list",
+          "cachedResultName": "aiagentsinc@gmail.com"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', `Use pacific timezone`, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', `Use pacific timezone and from the service duration calculation`, 'string') }}",
+        "additionalFields": {
+          "description": "={{ $fromAI(\"Purpose_of_Booking\",\"The purpose of the call, the formatted response should be [The Purpose of the visit is: Purpose_of_Booking]\") }}",
+          "summary": "={{ $fromAI(\"Purpose\",\"The purpose of the call, the formatted response should be [Purpose]\") }} - {{ $fromAI(\"name\",\"The name of the person making the booking\") }}"
+        }
+      },
+      "id": "6563931c-c98f-4fbc-8734-8a5e900ba37f",
+      "name": "Creat event",
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "position": [
+        340,
+        380
+      ],
+      "typeVersion": 1.3,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "VOZZ5vJAU8kHP1sO",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "abd7fcc4-03e4-4130-b0cb-59237e48e30f",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -320,
+        160
+      ],
+      "id": "24d294d6-28c2-4997-8e28-ea07160967f0",
+      "name": "Webhook",
+      "webhookId": "abd7fcc4-03e4-4130-b0cb-59237e48e30f"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        420,
+        140
+      ],
+      "id": "87c5bbcc-118c-421b-b6d8-ea800514bfc5",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=User Request: {{ $json.query.request }}\n\nUser Name: {{ $json.body.name }}\n\nBooking Service: {{ $json.body.booking_service }}\n\nService Duration: {{ $json.body.service_duration }}\n\nTimezone is Pacific Time",
+        "options": {
+          "systemMessage": "=The current date is: {{ new Date().toLocaleString(\"en-US\", { timeZone: \"America/Los_Angeles\" }) }} Pacific Time Zone.\n\nCheck if the date that the user wanted is available in the Availability Tool.\n\nFor example, the message to extract could look similar to \"Just to confirm, you would to make a tomorrow at 6 PM under the name Ali for Dinner. That correct?\"\n\nMake sure that you take the latest message response for the confirmed booking, if there are multiple confirmations of bookings in the message, choose the latest one.\n\nIf there is already a booking at the users wanted booking time and date, return with only the output \"Unavailable\". If there are currently no bookings at the time, return with only the output \"Available\"\n\nUse \"Create event\" to book the appointment when the slot is available.\n\nUse the service duration for setting the end time of the event."
+        }
+      },
+      "id": "63ae4d77-d7c2-4dc6-a1f2-7b7d97f2e820",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -40,
+        160
+      ],
+      "typeVersion": 1.7
+    }
+  ],
+  "connections": {
+    "Creat event": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Availability": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "c0be99c9-8058-4a4d-aad5-19a053b434e8",
+  "triggerCount": 1,
+  "tags": []
+}
