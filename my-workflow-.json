@@ -1,9 +1,9 @@
 {
   "createdAt": "2025-06-11T18:19:32.469Z",
-  "updatedAt": "2025-06-11T18:21:01.000Z",
+  "updatedAt": "2025-06-11T18:21:55.000Z",
   "id": "sAnuupU5pz6o7tBQ",
   "name": "My workflow",
-  "active": false,
+  "active": true,
   "nodes": [
     {
       "parameters": {
@@ -398,12 +398,16 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "staticData": null,
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
   "meta": {
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
   "versionId": "2cf5883d-b486-4f51-8abd-12a349653834",
-  "triggerCount": 0,
+  "triggerCount": 1,
   "tags": []
 }
