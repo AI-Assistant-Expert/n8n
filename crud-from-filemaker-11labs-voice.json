@@ -1,0 +1,238 @@
+{
+  "createdAt": "2025-04-22T03:48:11.419Z",
+  "updatedAt": "2025-05-22T16:49:58.000Z",
+  "id": "ufTuyFHo6Ou9W2ON",
+  "name": "CRUD from FileMaker 11Labs",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=User Input: {{ $json.query.request }}.\n\nCurrent time: {{ $now.toLocal().toString() }}\n  ",
+        "options": {
+          "systemMessage": "You are a helpful assistant. Look at the user query and you need to find answers to that from the buffer or tools available with you. \n\nYou will trigger FileMaker tool to find the user data if it doesn't exist in the buffer/memory.\n\nYour reply to any query has to be precise of what asked and don't need to ask users for more questions.",
+          "returnIntermediateSteps": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        560,
+        -60
+      ],
+      "id": "45f8e291-e19d-468c-a68d-0cce7165be69",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        480,
+        240
+      ],
+      "id": "86a01797-a26c-4dda-99bd-8b4323cf35c6",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "VQW5a5RxoMGI5sua",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "action": "find",
+        "layout": "Patient Input"
+      },
+      "type": "n8n-nodes-base.filemakerTool",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        200
+      ],
+      "id": "23a0d756-dff3-407e-bf23-c641851bc98f",
+      "name": "FileMaker4",
+      "credentials": {
+        "fileMaker": {
+          "id": "rWya9w9d9Y12AdQM",
+          "name": "FileMaker account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.message?.chat.id || \"test\" }}",
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        660,
+        220
+      ],
+      "id": "8f0b0439-9392-4e82-8c5d-98ceb57f0e3f",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {
+        "action": "find",
+        "layout": "Appointments",
+        "getPortals": "",
+        "responseLayout": "Patient Input",
+        "queries": {
+          "query": [
+            {
+              "fields": {
+                "field": [
+                  {
+                    "name": "IDReferral",
+                    "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Value', `You need to find the IDReferral from the user data tool ID`, 'string') }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.filemakerTool",
+      "typeVersion": 1,
+      "position": [
+        900,
+        200
+      ],
+      "id": "f777e17f-72f8-46f6-ac67-665a1476219a",
+      "name": "Appointment",
+      "credentials": {
+        "fileMaker": {
+          "id": "rWya9w9d9Y12AdQM",
+          "name": "FileMaker account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "path": "1ad4b11f-4f6b-436f-981d-1e41e8d640d5",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        180,
+        -60
+      ],
+      "id": "61c4c399-d519-4ad4-a541-b63075da051f",
+      "name": "Webhook",
+      "webhookId": "1ad4b11f-4f6b-436f-981d-1e41e8d640d5"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        1060,
+        -60
+      ],
+      "id": "e1dc8a26-953f-4b93-9b6c-1253353d1634",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "connections": {
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FileMaker4": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Appointment": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateId": "1068",
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "bde73a1f-af1b-4498-b375-fa8d071f79a9",
+  "triggerCount": 1,
+  "tags": [
+    {
+      "createdAt": "2025-04-22T03:48:09.757Z",
+      "updatedAt": "2025-04-22T03:48:09.757Z",
+      "id": "tnyneQ8F5W4j5M7x",
+      "name": "voice"
+    }
+  ]
+}
