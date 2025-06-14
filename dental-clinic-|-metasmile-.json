@@ -1,9 +1,10 @@
 {
-  "createdAt": "2025-04-14T15:17:54.254Z",
-  "updatedAt": "2025-04-24T11:25:25.000Z",
-  "id": "GUEtN0cEh5dleATl",
+  "createdAt": "2025-06-12T17:42:23.438Z",
+  "updatedAt": "2025-06-13T03:44:36.000Z",
+  "id": "TMZWFirMxen8WE7C",
   "name": "Dental Clinic | Metasmile",
   "active": true,
+  "isArchived": false,
   "nodes": [
     {
       "parameters": {
@@ -14,20 +15,14 @@
         },
         "options": {}
       },
-      "id": "8726472a-338d-46e1-a1c4-1b86c3f6a197",
+      "id": "379bd5d1-e84b-400d-9e3b-c774a5a60058",
       "name": "OpenAI Chat Model",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
         -100,
         380
       ],
-      "typeVersion": 1.2,
-      "credentials": {
-        "openAiApi": {
-          "id": "VQW5a5RxoMGI5sua",
-          "name": "OpenAi account"
-        }
-      }
+      "typeVersion": 1.2
     },
     {
       "parameters": {
@@ -36,7 +31,7 @@
         "width": 194,
         "color": 7
       },
-      "id": "786dfa60-5696-4042-b964-bf9d5571b85f",
+      "id": "4aacbf25-1f3d-45f7-b9a9-a8a75dfb477c",
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -52,7 +47,7 @@
         "width": 150,
         "color": 7
       },
-      "id": "39932d96-ebd6-4efa-89ae-d1dbecb5682a",
+      "id": "45954450-d719-471e-ac9a-c358634ff5af",
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -68,7 +63,7 @@
         "width": 190,
         "color": 7
       },
-      "id": "a19078e1-06fb-41b4-be6e-099664b21c98",
+      "id": "b3bfc166-3624-4f53-9501-008fb1595daa",
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -84,7 +79,7 @@
         "width": 190,
         "color": 7
       },
-      "id": "b39f7cc9-c370-4d8e-a087-bc4a38da912e",
+      "id": "d36aed2b-7164-42c5-abba-5ae072086dee",
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -106,20 +101,14 @@
         "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End_Time', ``, 'string') }}",
         "options": {}
       },
-      "id": "7cf443da-78ab-4a39-a33e-1fef7f8436cb",
+      "id": "17228533-cbea-433c-882f-2e0372aa33df",
       "name": "Check Availability",
       "type": "n8n-nodes-base.googleCalendarTool",
       "position": [
         180,
         380
       ],
-      "typeVersion": 1.3,
-      "credentials": {
-        "googleCalendarOAuth2Api": {
-          "id": "VOZZ5vJAU8kHP1sO",
-          "name": "Google Calendar account"
-        }
-      }
+      "typeVersion": 1.3
     },
     {
       "parameters": {
@@ -136,20 +125,14 @@
           "summary": "={{ $fromAI(\"Purpose\",\"The purpose of the call, the formatted response should be [Purpose]\") }} - {{ $fromAI(\"name\",\"The name of the person making the booking\") }}"
         }
       },
-      "id": "92038c9a-f5a3-443e-bafb-54742834d7a9",
+      "id": "f4c94c1a-babb-4e91-bf18-cb2481d9c67c",
       "name": "Creat event",
       "type": "n8n-nodes-base.googleCalendarTool",
       "position": [
         340,
         380
       ],
-      "typeVersion": 1.3,
-      "credentials": {
-        "googleCalendarOAuth2Api": {
-          "id": "VOZZ5vJAU8kHP1sO",
-          "name": "Google Calendar account"
-        }
-      }
+      "typeVersion": 1.3
     },
     {
       "parameters": {
@@ -164,7 +147,7 @@
         -320,
         180
       ],
-      "id": "5414ddcf-e56b-49dc-93ab-e0eff856b38a",
+      "id": "4df25e70-38bc-4d02-8bef-7b42ab3fa173",
       "name": "Webhook",
       "webhookId": "a25b21c0-4dc1-4862-ba50-926427fc29da"
     },
@@ -178,7 +161,7 @@
         420,
         100
       ],
-      "id": "ca45e8ca-2d83-47b8-8205-4c859573d74d",
+      "id": "d8c81201-323c-45a8-87b1-b8a2e0ed8e94",
       "name": "Respond to Webhook"
     },
     {
@@ -189,7 +172,7 @@
           "systemMessage": "=The current date is: {{ new Date().toLocaleString(\"en-US\", { timeZone: \"Europe/Lisbon\" }) }} Central European Summer Time .\n\nCheck if the date that the user wanted is available in the Availability Tool. If its available then it will return available as true or false.\n\nFor example, the message to extract could look similar to \"Just to confirm, you would to make a tomorrow at 6 PM under the name Ali for Dinner. That correct?\"\n\nMake sure that you take the latest message response for the confirmed booking, if there are multiple confirmations of bookings in the message, choose the latest one.\n\nIf there is already a booking at the users wanted booking time and date, return with only the output \"Unavailable\". If there are currently no bookings at the time, return with only the output \"Available\"\n\nUse \"Create event\" to book the appointment when the slot is available.\n\nUse the service duration for setting the end time of the event."
         }
       },
-      "id": "e3b1acb9-4468-4283-b7bf-a87bcf7c07c4",
+      "id": "47c8ec71-3b88-44b5-9841-42e5902db7e2",
       "name": "AI Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
@@ -260,11 +243,9 @@
     "executionOrder": "v1"
   },
   "staticData": null,
-  "meta": {
-    "templateCredsSetupCompleted": true
-  },
+  "meta": null,
   "pinData": {},
-  "versionId": "5fec76b6-de9b-4f2f-9339-3c89122a0740",
+  "versionId": "082dc9ff-d063-4c95-882a-f830958c0647",
   "triggerCount": 1,
   "tags": []
 }
