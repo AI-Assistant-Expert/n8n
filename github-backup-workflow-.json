@@ -1,9 +1,10 @@
 {
-  "createdAt": "2025-06-11T18:19:32.469Z",
-  "updatedAt": "2025-06-11T18:23:07.000Z",
-  "id": "sAnuupU5pz6o7tBQ",
+  "createdAt": "2025-06-12T17:42:58.536Z",
+  "updatedAt": "2025-06-13T08:03:04.000Z",
+  "id": "cez3CN1OCjuaas1l",
   "name": "Github backup workflow",
   "active": true,
+  "isArchived": false,
   "nodes": [
     {
       "parameters": {
@@ -13,7 +14,7 @@
           ]
         }
       },
-      "id": "45375bf6-bf50-4437-93bd-d61cd976f514",
+      "id": "ef78deeb-8de1-4c37-a5f0-2a90ef538f4a",
       "name": "Schedule Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "position": [
@@ -27,7 +28,7 @@
         "filters": {},
         "requestOptions": {}
       },
-      "id": "17d11717-0b6a-40a0-a7d3-457c336f5595",
+      "id": "fb157163-3a13-4989-8249-716e8aaaeabe",
       "name": "Retrieve workflows",
       "type": "n8n-nodes-base.n8n",
       "position": [
@@ -37,7 +38,7 @@
       "typeVersion": 1,
       "credentials": {
         "n8nApi": {
-          "id": "DhfDVmaibg3ES8W9",
+          "id": "YsKj3HHH0YCt52gy",
           "name": "n8n account"
         }
       }
@@ -53,7 +54,7 @@
         },
         "options": {}
       },
-      "id": "5ddfb2cc-d12d-4822-b98a-d008f4eaf016",
+      "id": "eb72c9e4-23f8-4c26-8d7b-930471e19986",
       "name": "Aggregate",
       "type": "n8n-nodes-base.aggregate",
       "position": [
@@ -80,7 +81,7 @@
         },
         "filePath": "="
       },
-      "id": "a02e58b8-2463-4a99-94f0-635f8b1c0c27",
+      "id": "ebb037ba-0ae6-48b5-abfa-4b1da81b043c",
       "name": "List files from repo",
       "type": "n8n-nodes-base.github",
       "position": [
@@ -92,7 +93,7 @@
       "alwaysOutputData": true,
       "credentials": {
         "githubApi": {
-          "id": "QAb6QNRixd1PIro9",
+          "id": "5ReImyhBxYLL8TQS",
           "name": "GitHub account"
         }
       }
@@ -117,7 +118,7 @@
         "fileContent": "={{ $('To base64').item.json.data }}",
         "commitMessage": "=backup-{{ $('Commit date & file name').item.json.commitDate }}"
       },
-      "id": "bc30ad9b-461d-436d-b227-1f5bf9fd4651",
+      "id": "4e86bb22-23f5-4605-ad0a-4ebb0a95da86",
       "name": "Update file",
       "type": "n8n-nodes-base.github",
       "position": [
@@ -128,7 +129,7 @@
       "typeVersion": 1,
       "credentials": {
         "githubApi": {
-          "id": "QAb6QNRixd1PIro9",
+          "id": "5ReImyhBxYLL8TQS",
           "name": "GitHub account"
         }
       }
@@ -152,7 +153,7 @@
         "fileContent": "={{ $('To base64').item.json.data }}",
         "commitMessage": "=backup-{{ $node['Commit date & file name'].json.commitDate }}"
       },
-      "id": "61616e01-8969-4f4d-aded-0fd869a362aa",
+      "id": "5d4f95f6-6428-498b-9a70-56b2ea636177",
       "name": "Upload file",
       "type": "n8n-nodes-base.github",
       "position": [
@@ -163,7 +164,7 @@
       "typeVersion": 1,
       "credentials": {
         "githubApi": {
-          "id": "QAb6QNRixd1PIro9",
+          "id": "5ReImyhBxYLL8TQS",
           "name": "GitHub account"
         }
       }
@@ -180,7 +181,7 @@
           ]
         }
       },
-      "id": "9adff312-5297-457c-b62b-0905235f3c5c",
+      "id": "fe501d9f-bcff-43d3-9cdb-056af5c0545c",
       "name": "Check if file exists",
       "type": "n8n-nodes-base.if",
       "position": [
@@ -197,7 +198,7 @@
           "format": true
         }
       },
-      "id": "fa469b76-7b5b-4a91-92fd-589551954a26",
+      "id": "f6b88011-651b-4cf3-b321-33a1a59a986d",
       "name": "Json file",
       "type": "n8n-nodes-base.convertToFile",
       "position": [
@@ -211,7 +212,7 @@
         "operation": "binaryToPropery",
         "options": {}
       },
-      "id": "49be3d03-5e97-45df-94c9-119f7a51eec1",
+      "id": "007b3155-4959-44b8-b8c7-3d4bd8d46932",
       "name": "To base64",
       "type": "n8n-nodes-base.extractFromFile",
       "position": [
@@ -227,7 +228,7 @@
         "width": 300,
         "color": 5
       },
-      "id": "0c2e9ba2-eb4f-4cb0-9994-d06693be1ea8",
+      "id": "43d53182-dc8d-4ee9-aa8b-04d384616631",
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -256,7 +257,7 @@
         },
         "options": {}
       },
-      "id": "a4a5b852-8b18-4903-bb44-de4bf9d6d0d1",
+      "id": "e90e2dfa-9500-4ae0-8f7d-4c3987167881",
       "name": "Commit date & file name",
       "type": "n8n-nodes-base.set",
       "position": [
@@ -272,7 +273,7 @@
         "width": 460,
         "color": 3
       },
-      "id": "2ed8c3f1-11ba-4d85-997c-6355c205e416",
+      "id": "61e45c5a-5a7c-4d5e-8540-45092ae9cdb7",
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -288,7 +289,7 @@
         "width": 460,
         "color": 4
       },
-      "id": "4f0a45f6-123a-4c17-8d60-4efc675bde49",
+      "id": "0323af47-510e-4291-bdfe-f704bb8d060d",
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -407,7 +408,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "e94ec53e-15e9-4c52-a746-862d5cdbdc2c",
+  "versionId": "d79b5e4c-a7fd-4276-8f0b-2f8af0cbc8e3",
   "triggerCount": 1,
   "tags": []
 }
