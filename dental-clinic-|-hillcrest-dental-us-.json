@@ -1,9 +1,10 @@
 {
-  "createdAt": "2025-05-06T17:37:03.467Z",
-  "updatedAt": "2025-05-06T18:17:37.000Z",
-  "id": "vlrQsM0JowPPCCky",
+  "createdAt": "2025-06-12T17:41:31.132Z",
+  "updatedAt": "2025-06-13T03:44:41.000Z",
+  "id": "ma75pPMcW17JXBoB",
   "name": "Dental Clinic | Hillcrest Dental US",
   "active": true,
+  "isArchived": false,
   "nodes": [
     {
       "parameters": {
@@ -14,7 +15,7 @@
         },
         "options": {}
       },
-      "id": "7f933f9e-3bdd-40c5-ba07-fd84614cd98c",
+      "id": "52981f42-47d7-4caf-913b-e5494b6ba9c2",
       "name": "OpenAI Chat Model",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
@@ -24,7 +25,7 @@
       "typeVersion": 1.2,
       "credentials": {
         "openAiApi": {
-          "id": "VQW5a5RxoMGI5sua",
+          "id": "Z9tGwUwFTMTG2mbT",
           "name": "OpenAi account"
         }
       }
@@ -36,7 +37,7 @@
         "width": 194,
         "color": 7
       },
-      "id": "dfcdae73-87f3-4bbc-a366-2748477429a9",
+      "id": "d7c7d006-1cd9-4f92-93bb-cd5acf252dac",
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -52,7 +53,7 @@
         "width": 150,
         "color": 7
       },
-      "id": "7643d483-3008-4880-be12-fc7eb3b684d3",
+      "id": "fc171ea6-19ff-4161-abb7-499caf3a0fac",
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -68,7 +69,7 @@
         "width": 190,
         "color": 7
       },
-      "id": "e54c9342-2d4f-4d61-8fce-93909a2d15c9",
+      "id": "0a71c4b7-02b8-478c-adef-9f41816bc8d5",
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -84,7 +85,7 @@
         "width": 190,
         "color": 7
       },
-      "id": "d963378b-9b1e-4a85-a899-7f9182ddcfa6",
+      "id": "b992d362-e269-4273-9e72-f43709906211",
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -106,7 +107,7 @@
         "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End_Time', ``, 'string') }}",
         "options": {}
       },
-      "id": "a099ea39-8338-414c-b13d-857291ffdaca",
+      "id": "f8567359-235a-4a83-aa2f-d6b0ba172514",
       "name": "Check Availability",
       "type": "n8n-nodes-base.googleCalendarTool",
       "position": [
@@ -116,7 +117,7 @@
       "typeVersion": 1.3,
       "credentials": {
         "googleCalendarOAuth2Api": {
-          "id": "VOZZ5vJAU8kHP1sO",
+          "id": "xB1LfN788YLz65un",
           "name": "Google Calendar account"
         }
       }
@@ -136,7 +137,7 @@
           "summary": "={{ $fromAI(\"Purpose\",\"The purpose of the call, the formatted response should be [Purpose]\") }} - {{ $fromAI(\"name\",\"The name of the person making the booking\") }}"
         }
       },
-      "id": "a77806e2-a802-4bf4-9fec-641c42cf54af",
+      "id": "563ca0a7-abd9-4292-8fb1-cea561b61935",
       "name": "Creat event",
       "type": "n8n-nodes-base.googleCalendarTool",
       "position": [
@@ -146,7 +147,7 @@
       "typeVersion": 1.3,
       "credentials": {
         "googleCalendarOAuth2Api": {
-          "id": "VOZZ5vJAU8kHP1sO",
+          "id": "xB1LfN788YLz65un",
           "name": "Google Calendar account"
         }
       }
@@ -164,7 +165,7 @@
         -320,
         180
       ],
-      "id": "b2401097-3c52-4ab9-9c84-e111258ecb3c",
+      "id": "b71e6b02-8403-4eab-b87d-defd10b3e71f",
       "name": "Webhook",
       "webhookId": "921a47b9-1c03-42cd-8b1b-3fd4ed5372d9"
     },
@@ -178,7 +179,7 @@
         420,
         100
       ],
-      "id": "fa4feefc-b1d0-4005-a732-710b71ca7407",
+      "id": "8b32834e-edee-4521-b432-88237fb482a0",
       "name": "Respond to Webhook"
     },
     {
@@ -189,7 +190,7 @@
           "systemMessage": "=The current date is: {{ new Date().toLocaleString(\"en-US\", { timeZone: \"America/Los_Angeles\" }) }} Pacific Time Zone (PT).\n\nCheck if the date that the user wanted is available in the Availability Tool. If its available then it will return available as true or false.\n\nFor example, the message to extract could look similar to \"Just to confirm, you would to make a tomorrow at 6 PM under the name Ali for Dinner. That correct?\"\n\nMake sure that you take the latest message response for the confirmed booking, if there are multiple confirmations of bookings in the message, choose the latest one.\n\nIf there is already a booking at the users wanted booking time and date, return with only the output \"Unavailable\". If there are currently no bookings at the time, return with only the output \"Available\"\n\nUse \"Create event\" to book the appointment when the slot is available.\n\nUse the service duration for setting the end time of the event."
         }
       },
-      "id": "75b4105a-dde6-4379-a539-5fe53af374e1",
+      "id": "30b4bb50-b92b-4e32-a1a5-d46a2a0c4195",
       "name": "AI Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
@@ -264,7 +265,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "e7e4b127-d9e7-4524-a80d-107a5c664f19",
+  "versionId": "d8944bdf-3c31-498c-90cd-f91f5b09dc12",
   "triggerCount": 1,
   "tags": []
 }
