@@ -1,9 +1,10 @@
 {
-  "createdAt": "2025-04-01T16:12:12.971Z",
-  "updatedAt": "2025-04-30T17:31:50.000Z",
-  "id": "jIyPKdJqH3P8a3tG",
+  "createdAt": "2025-06-12T17:43:28.182Z",
+  "updatedAt": "2025-06-13T03:44:39.000Z",
+  "id": "aGrqCGgYhakhLMOv",
   "name": "Hair Salon Booking | thehairloungelajolla",
   "active": true,
+  "isArchived": false,
   "nodes": [
     {
       "parameters": {
@@ -14,7 +15,7 @@
         },
         "options": {}
       },
-      "id": "fbf5feee-02c9-46fe-9117-fec7620e5933",
+      "id": "e6849987-f84d-4746-a261-9fc536cb32d1",
       "name": "OpenAI Chat Model",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
@@ -24,7 +25,7 @@
       "typeVersion": 1.2,
       "credentials": {
         "openAiApi": {
-          "id": "VQW5a5RxoMGI5sua",
+          "id": "Z9tGwUwFTMTG2mbT",
           "name": "OpenAi account"
         }
       }
@@ -36,7 +37,7 @@
         "width": 194,
         "color": 7
       },
-      "id": "25c9f5eb-fe61-424f-bf95-002be5b9c29e",
+      "id": "5fb2305f-42db-4b7d-abfe-966e7987de53",
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -52,7 +53,7 @@
         "width": 150,
         "color": 7
       },
-      "id": "c11f23c5-1fc7-4397-892a-5ebc90d4131f",
+      "id": "09611135-aa09-4461-b40a-d46598fae09d",
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -68,7 +69,7 @@
         "width": 190,
         "color": 7
       },
-      "id": "28c11e83-63a4-44c1-bb27-b7d7b49d040d",
+      "id": "e503e8f2-e1c9-4f11-96d0-71753640975a",
       "name": "Sticky Note1",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -84,7 +85,7 @@
         "width": 190,
         "color": 7
       },
-      "id": "f2b92176-71c0-4dc6-a279-e478135acd2e",
+      "id": "a3cff2bb-ae04-4b36-b7e2-0d0e9877253f",
       "name": "Sticky Note3",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
@@ -106,7 +107,7 @@
         "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End_Time', ``, 'string') }}",
         "options": {}
       },
-      "id": "44320e35-cb8c-443d-b589-22a435479068",
+      "id": "7327258e-5731-4c3c-bc18-848fe8bccae9",
       "name": "Check Availability",
       "type": "n8n-nodes-base.googleCalendarTool",
       "position": [
@@ -116,7 +117,7 @@
       "typeVersion": 1.3,
       "credentials": {
         "googleCalendarOAuth2Api": {
-          "id": "VOZZ5vJAU8kHP1sO",
+          "id": "xB1LfN788YLz65un",
           "name": "Google Calendar account"
         }
       }
@@ -136,7 +137,7 @@
           "summary": "={{ $fromAI(\"Purpose\",\"The purpose of the call, the formatted response should be [Purpose]\") }} - {{ $fromAI(\"name\",\"The name of the person making the booking\") }}"
         }
       },
-      "id": "6563931c-c98f-4fbc-8734-8a5e900ba37f",
+      "id": "ef6abed0-c499-4aa0-8b90-4a6bbd1f2d2d",
       "name": "Creat event",
       "type": "n8n-nodes-base.googleCalendarTool",
       "position": [
@@ -146,7 +147,7 @@
       "typeVersion": 1.3,
       "credentials": {
         "googleCalendarOAuth2Api": {
-          "id": "VOZZ5vJAU8kHP1sO",
+          "id": "xB1LfN788YLz65un",
           "name": "Google Calendar account"
         }
       }
@@ -164,7 +165,7 @@
         -320,
         160
       ],
-      "id": "24d294d6-28c2-4997-8e28-ea07160967f0",
+      "id": "6b9922a2-0ce1-49c7-b1c1-1da2803dcbc0",
       "name": "Webhook",
       "webhookId": "abd7fcc4-03e4-4130-b0cb-59237e48e30f"
     },
@@ -178,7 +179,7 @@
         420,
         140
       ],
-      "id": "87c5bbcc-118c-421b-b6d8-ea800514bfc5",
+      "id": "50510145-38d8-43a3-865d-d8625649f1fc",
       "name": "Respond to Webhook"
     },
     {
@@ -189,7 +190,7 @@
           "systemMessage": "=The current date is: {{ new Date().toLocaleString(\"en-US\", { timeZone: \"America/Los_Angeles\" }) }} Pacific Time Zone.\n\nCheck if the date that the user wanted is available in the Availability Tool.\n\nFor example, the message to extract could look similar to \"Just to confirm, you would to make a tomorrow at 6 PM under the name Ali for Dinner. That correct?\"\n\nMake sure that you take the latest message response for the confirmed booking, if there are multiple confirmations of bookings in the message, choose the latest one.\n\nIf there is already a booking at the users wanted booking time and date, return with only the output \"Unavailable\". If there are currently no bookings at the time, return with only the output \"Available\"\n\nUse \"Create event\" to book the appointment when the slot is available.\n\nUse the service duration for setting the end time of the event."
         }
       },
-      "id": "63ae4d77-d7c2-4dc6-a1f2-7b7d97f2e820",
+      "id": "167eed35-2728-42df-ae16-2a9ae8a9da72",
       "name": "AI Agent",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
@@ -264,7 +265,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "c0be99c9-8058-4a4d-aad5-19a053b434e8",
+  "versionId": "ef65c24d-562c-457d-850e-48808bffa783",
   "triggerCount": 1,
   "tags": []
 }
