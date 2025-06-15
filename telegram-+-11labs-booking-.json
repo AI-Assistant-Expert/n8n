@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-06-13T13:48:20.039Z",
-  "updatedAt": "2025-06-13T13:51:42.000Z",
+  "updatedAt": "2025-06-14T13:56:03.000Z",
   "id": "nkDYK7iEb6buj89Q",
   "name": "Telegram + 11labs Booking",
   "active": false,
@@ -25,7 +25,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "User Input: ",
+        "text": "User Input: Test data\n\nYou need to add the user input to the supabase create row tool",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -49,8 +49,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        60,
-        240
+        40,
+        260
       ],
       "id": "258b8133-2e5f-46e1-8eb1-8c33654d50e5",
       "name": "OpenAI Chat Model",
@@ -69,7 +69,7 @@
         "fieldsUi": {
           "fieldValues": [
             {
-              "fieldId": "json",
+              "fieldId": "data",
               "fieldValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fieldValues0_Field_Value', ``, 'string') }}"
             }
           ]
@@ -134,7 +134,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "8397abe3-c95f-499f-9766-6d1daf92c16b",
+  "versionId": "a0a748d7-5e4e-4f90-860d-121a5fa60e01",
   "triggerCount": 0,
   "tags": []
 }
