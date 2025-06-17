@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-06-12T17:42:23.438Z",
-  "updatedAt": "2025-06-13T03:44:36.000Z",
+  "updatedAt": "2025-06-16T16:36:20.000Z",
   "id": "TMZWFirMxen8WE7C",
   "name": "Dental Clinic | Metasmile",
   "active": true,
@@ -22,7 +22,13 @@
         -100,
         380
       ],
-      "typeVersion": 1.2
+      "typeVersion": 1.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "Z9tGwUwFTMTG2mbT",
+          "name": "OpenAi account"
+        }
+      }
     },
     {
       "parameters": {
@@ -108,7 +114,13 @@
         180,
         380
       ],
-      "typeVersion": 1.3
+      "typeVersion": 1.3,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "xB1LfN788YLz65un",
+          "name": "Google Calendar account"
+        }
+      }
     },
     {
       "parameters": {
@@ -132,7 +144,13 @@
         340,
         380
       ],
-      "typeVersion": 1.3
+      "typeVersion": 1.3,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "xB1LfN788YLz65un",
+          "name": "Google Calendar account"
+        }
+      }
     },
     {
       "parameters": {
@@ -243,9 +261,11 @@
     "executionOrder": "v1"
   },
   "staticData": null,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "pinData": {},
-  "versionId": "082dc9ff-d063-4c95-882a-f830958c0647",
+  "versionId": "59cc69e4-7a24-4e9e-bb05-f36ae663356c",
   "triggerCount": 1,
   "tags": []
 }
