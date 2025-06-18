@@ -1,0 +1,51 @@
+{
+  "createdAt": "2025-06-17T16:13:34.121Z",
+  "updatedAt": "2025-06-17T16:13:34.121Z",
+  "id": "v3JozoW4FdJPJxGd",
+  "name": "Fetch data from Google Maps",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "0b9fde61-a30b-43ef-b028-d7940c129d71",
+      "name": "Google Sheets Trigger"
+    }
+  ],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "e222f20c-f2f0-443f-844e-a5148ec040a3",
+  "triggerCount": 0,
+  "tags": []
+}
