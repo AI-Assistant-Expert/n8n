@@ -1,0 +1,38 @@
+{
+  "createdAt": "2025-06-20T17:21:56.034Z",
+  "updatedAt": "2025-06-20T17:52:49.000Z",
+  "id": "9KmyyVvsmMCXgtKo",
+  "name": "conversation ui",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "bd7e2b27-d6b5-4670-8b01-14c9b47fc9ed",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a6af32fc-228b-44fd-ab5c-b105ed967bf0",
+      "name": "Webhook",
+      "webhookId": "bd7e2b27-d6b5-4670-8b01-14c9b47fc9ed"
+    }
+  ],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "66619d43-93fd-449d-a91b-283cbe572752",
+  "triggerCount": 1,
+  "tags": []
+}
