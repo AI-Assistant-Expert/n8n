@@ -1,0 +1,143 @@
+{
+  "createdAt": "2025-07-08T08:04:41.437Z",
+  "updatedAt": "2025-07-08T17:28:50.000Z",
+  "id": "K84pOLJ9PRPXxQku",
+  "name": "Generic Calendar Booking Tool",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "3d4415f8-85d6-4ed8-8024-6c962d4b381b",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -260,
+        -100
+      ],
+      "id": "f05c219c-b928-47e2-ba42-19c33d34438f",
+      "name": "Webhook",
+      "webhookId": "3d4415f8-85d6-4ed8-8024-6c962d4b381b"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://user-api-v2.simplybook.me/admin/auth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"company\": \"aiagents\",\n  \"login\": \"mexson@askaiagents.com\",\n  \"password\": \"STudio@@d1\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -40,
+        -100
+      ],
+      "id": "4bbf4475-f04b-46ea-9115-e5cc01155579",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://user-api-v2.simplybook.me/admin/bookings",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Company-Login",
+              "value": "aiagents"
+            },
+            {
+              "name": "X-Token",
+              "value": "={{ $json.token }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "start_datetime",
+              "value": "={{ $('Webhook').item.json.body.start_datetime }}"
+            },
+            {
+              "name": "service_id",
+              "value": "={{ $('Webhook').item.json.body.service_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        180,
+        -100
+      ],
+      "id": "309b591e-3710-49f2-a820-9ef8c511ec95",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        400,
+        -100
+      ],
+      "id": "c284b043-a2df-40f7-b78d-a949d52862ab",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "60e01b7a-f66b-4a3a-9544-b734d7a7437a",
+  "triggerCount": 1,
+  "tags": []
+}
