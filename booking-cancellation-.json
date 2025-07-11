@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-07-09T16:09:36.405Z",
-  "updatedAt": "2025-07-09T16:20:41.000Z",
+  "updatedAt": "2025-07-10T16:33:19.000Z",
   "id": "4uL5AuoG97PgAhQ7",
   "name": "Booking cancellation",
   "active": true,
@@ -26,7 +26,7 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Want to cancel the booking with booking details as follows:\n\nDate is `{{ $json.body.args.date }}`\nTime is `{{ $json.body.args.time }}`\nCancel Type is `{{ $json.body.args.cancel_type }}`\nuser_number is `{{ $json.body.args.user_number }}`",
+        "text": "=Want to cancel the booking with booking details as follows:\n\nDate is `{{ $json.body.args.date }}`\nTime is `{{ $json.body.args.time }}`\nCancel Type is `{{ $json.body.args.cancel_type }}`\nuser_number is `{{ $json.body.args.user_number }}`\nCancellation reason is `{{ $json.body.args.cancel_reason }}`",
         "options": {
           "systemMessage": "You are a helpful assistant, who cancels appointments on cal.com platform API and updates the status of the booking.\n\nExample of Cancel Request:\n\nPOST https://api.cal.com/v2/bookings/<<booking_id>>/cancel\nContent-Type: application/json\n\n\nResponse from the cal.come tool check for the status field and use that as the success or failure for the cancellation."
         }
@@ -94,7 +94,7 @@
       "type": "n8n-nodes-base.httpRequestTool",
       "typeVersion": 4.2,
       "position": [
-        520,
+        580,
         220
       ],
       "id": "472491e3-5ed0-406f-9edc-d57a144449aa",
@@ -118,6 +118,47 @@
       ],
       "id": "0cb5d98a-355d-498b-9f04-52076151fa90",
       "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Search for the booking number from the user input so that we can cancel the booking",
+        "url": "https://api.cal.com/v2/bookings",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer cal_live_7c40d61c7f2f1888c0d65b822f8aba0b"
+            },
+            {
+              "name": "cal-api-version",
+              "value": "2024-08-13"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "afterStart",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters0_Value', `Filter bookings with start after this date string with the format as UTC using the date time provided`, 'string') }}"
+            },
+            {
+              "name": "take",
+              "value": "1"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        380,
+        220
+      ],
+      "id": "3e4220c9-6a19-4376-a0e4-e8a881d4c054",
+      "name": "Search booking"
     }
   ],
   "connections": {
@@ -175,6 +216,17 @@
           }
         ]
       ]
+    },
+    "Search booking": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -185,7 +237,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "eca62f69-b54e-443c-82a8-56e2a719400a",
+  "versionId": "c9dfe1ef-36fb-4a3a-9f28-a33eb258b9e1",
   "triggerCount": 1,
   "tags": []
 }
