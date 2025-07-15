@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-07-09T16:09:36.405Z",
-  "updatedAt": "2025-07-10T16:33:19.000Z",
+  "updatedAt": "2025-07-14T16:21:03.000Z",
   "id": "4uL5AuoG97PgAhQ7",
   "name": "Booking cancellation",
   "active": true,
@@ -26,9 +26,9 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Want to cancel the booking with booking details as follows:\n\nDate is `{{ $json.body.args.date }}`\nTime is `{{ $json.body.args.time }}`\nCancel Type is `{{ $json.body.args.cancel_type }}`\nuser_number is `{{ $json.body.args.user_number }}`\nCancellation reason is `{{ $json.body.args.cancel_reason }}`",
+        "text": "=Want to cancel the booking with booking details as follows:\n\nDate is `{{ $json.body.args.date }}`\nTime is `{{ $json.body.args.time }}`\nCancel Type is `{{ $json.body.args.cancel_type }}`\nattendeeEmail is `{{ $json.body.args.user_number }}`\nCancellation reason is `{{ $json.body.args.cancel_reason }}`\n",
         "options": {
-          "systemMessage": "You are a helpful assistant, who cancels appointments on cal.com platform API and updates the status of the booking.\n\nExample of Cancel Request:\n\nPOST https://api.cal.com/v2/bookings/<<booking_id>>/cancel\nContent-Type: application/json\n\n\nResponse from the cal.come tool check for the status field and use that as the success or failure for the cancellation."
+          "systemMessage": "You are a helpful assistant, who cancels appointments on cal.com platform API and updates the status of the booking.\n\nExample of Cancel Request:\n\nPOST https://api.cal.com/v2/bookings/<<booking_ uid>>/cancel\nContent-Type: application/json\n\nFetch the uid from the fetch booking data\n\n\nResponse from the cal.come tool check for the status field and use that as the success or failure for the cancellation."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -123,21 +123,8 @@
       "parameters": {
         "toolDescription": "Search for the booking number from the user input so that we can cancel the booking",
         "url": "https://api.cal.com/v2/bookings",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Authorization",
-              "value": "Bearer cal_live_7c40d61c7f2f1888c0d65b822f8aba0b"
-            },
-            {
-              "name": "cal-api-version",
-              "value": "2024-08-13"
-            }
-          ]
-        },
-        "sendBody": true,
-        "bodyParameters": {
+        "sendQuery": true,
+        "queryParameters": {
           "parameters": [
             {
               "name": "afterStart",
@@ -146,6 +133,31 @@
             {
               "name": "take",
               "value": "1"
+            },
+            {
+              "name": "attendeeEmail",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters2_Value', `this is the attendee email`, 'string') }}"
+            },
+            {
+              "name": "status",
+              "value": "upcoming"
+            },
+            {
+              "name": "beforeEnd",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters4_Value', `set this as +1 hour then the afterStart string of date format`, 'string') }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer cal_live_1c583a016f243d92cced3cc0b22a2ea1"
+            },
+            {
+              "name": "cal-api-version",
+              "value": "2024-08-13"
             }
           ]
         },
@@ -237,7 +249,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "c9dfe1ef-36fb-4a3a-9f28-a33eb258b9e1",
+  "versionId": "e8af6a46-eeae-465f-ade6-eea514a4751d",
   "triggerCount": 1,
   "tags": []
 }
