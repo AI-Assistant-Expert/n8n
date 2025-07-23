@@ -1,10 +1,10 @@
 {
   "createdAt": "2025-07-08T08:04:41.437Z",
-  "updatedAt": "2025-07-08T17:28:50.000Z",
+  "updatedAt": "2025-07-22T16:53:07.000Z",
   "id": "K84pOLJ9PRPXxQku",
   "name": "Generic Calendar Booking Tool",
-  "active": true,
-  "isArchived": false,
+  "active": false,
+  "isArchived": true,
   "nodes": [
     {
       "parameters": {
@@ -137,7 +137,7 @@
   "staticData": null,
   "meta": null,
   "pinData": {},
-  "versionId": "60e01b7a-f66b-4a3a-9544-b734d7a7437a",
+  "versionId": "a696daca-9681-4a1b-adfe-ef761222af36",
   "triggerCount": 1,
   "tags": []
 }
