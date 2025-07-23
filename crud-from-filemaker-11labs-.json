@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-06-12T17:41:06.100Z",
-  "updatedAt": "2025-06-13T17:35:34.000Z",
+  "updatedAt": "2025-07-22T16:53:46.000Z",
   "id": "JLyCYSTwmfXnuI8k",
   "name": "CRUD from FileMaker 11Labs",
   "active": true,
@@ -36,8 +36,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        300,
-        300
+        200,
+        240
       ],
       "id": "36f940d2-2998-482c-8528-28b2fffa326a",
       "name": "OpenAI Chat Model",
@@ -85,42 +85,6 @@
     },
     {
       "parameters": {
-        "action": "find",
-        "layout": "Appointments",
-        "getPortals": "",
-        "responseLayout": "Patient Input",
-        "queries": {
-          "query": [
-            {
-              "fields": {
-                "field": [
-                  {
-                    "name": "IDReferral",
-                    "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Value', `You need to find the IDReferral from the user data tool ID`, 'string') }}"
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.filemakerTool",
-      "typeVersion": 1,
-      "position": [
-        720,
-        260
-      ],
-      "id": "e9108e2a-ae4a-453c-8b3b-49e962d51e52",
-      "name": "Appointment",
-      "credentials": {
-        "fileMaker": {
-          "id": "olW7Z34cJ8ZnzTko",
-          "name": "FileMaker account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "path": "1ad4b11f-4f6b-436f-981d-1e41e8d640d5",
         "responseMode": "responseNode",
         "options": {}
@@ -147,6 +111,78 @@
       ],
       "id": "69c5aa73-7c64-419f-b6c6-508b4a790a3f",
       "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "action": "find",
+        "layout": "Appointments",
+        "getPortals": "",
+        "responseLayout": "Patient Input",
+        "queries": {
+          "query": [
+            {
+              "fields": {
+                "field": [
+                  {
+                    "name": "IDReferral",
+                    "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Value', `You need to find the IDReferral from the user data tool ID`, 'string') }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.filemakerTool",
+      "typeVersion": 1,
+      "position": [
+        720,
+        260
+      ],
+      "id": "e9108e2a-ae4a-453c-8b3b-49e962d51e52",
+      "name": "Fetch Appointment",
+      "credentials": {
+        "fileMaker": {
+          "id": "olW7Z34cJ8ZnzTko",
+          "name": "FileMaker account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "action": "find",
+        "layout": "Appointments",
+        "getPortals": "",
+        "responseLayout": "Patient Input",
+        "queries": {
+          "query": [
+            {
+              "fields": {
+                "field": [
+                  {
+                    "name": "IDReferral",
+                    "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Value', `You need to find the IDReferral from the user data tool ID`, 'string') }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.filemakerTool",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        260
+      ],
+      "id": "2861dc60-6d70-401e-924b-4cb22db2caf2",
+      "name": "Fetch Appointment1",
+      "credentials": {
+        "fileMaker": {
+          "id": "olW7Z34cJ8ZnzTko",
+          "name": "FileMaker account"
+        }
+      }
     }
   ],
   "connections": {
@@ -194,23 +230,23 @@
         ]
       ]
     },
-    "Appointment": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Webhook": {
       "main": [
         [
           {
             "node": "AI Agent",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Appointment": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -225,7 +261,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "dfffab69-7955-4935-9504-93f47a1e2877",
+  "versionId": "a9ecd555-b64a-4164-9de6-e377f090b39c",
   "triggerCount": 1,
   "tags": []
 }
