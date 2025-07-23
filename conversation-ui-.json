@@ -1,10 +1,10 @@
 {
   "createdAt": "2025-06-20T17:21:56.034Z",
-  "updatedAt": "2025-06-20T17:52:49.000Z",
+  "updatedAt": "2025-07-22T16:57:32.000Z",
   "id": "9KmyyVvsmMCXgtKo",
   "name": "conversation ui",
-  "active": true,
-  "isArchived": false,
+  "active": false,
+  "isArchived": true,
   "nodes": [
     {
       "parameters": {
@@ -32,7 +32,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "66619d43-93fd-449d-a91b-283cbe572752",
+  "versionId": "3568c66c-a7ec-43e7-8201-9baffb49d70c",
   "triggerCount": 1,
   "tags": []
 }
