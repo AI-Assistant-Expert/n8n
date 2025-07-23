@@ -1,10 +1,10 @@
 {
   "createdAt": "2025-06-30T07:01:24.671Z",
-  "updatedAt": "2025-06-30T07:36:13.000Z",
+  "updatedAt": "2025-07-22T16:57:19.000Z",
   "id": "0tcXHpx9LCnkZqPv",
   "name": "Maccina One",
   "active": false,
-  "isArchived": false,
+  "isArchived": true,
   "nodes": [
     {
       "parameters": {
@@ -893,7 +893,7 @@
   "staticData": null,
   "meta": null,
   "pinData": {},
-  "versionId": "7e071d92-a309-429d-93ee-0ad94d0c75ea",
+  "versionId": "8f8ec652-6f5c-47d8-80e8-e5259ab8b194",
   "triggerCount": 0,
   "tags": []
 }
