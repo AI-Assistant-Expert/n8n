@@ -1,0 +1,103 @@
+{
+  "createdAt": "2025-07-25T16:18:15.607Z",
+  "updatedAt": "2025-07-25T16:24:35.000Z",
+  "id": "J6kwSuEntVrSa3Um",
+  "name": "Fetch Access Token",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "path": "6dca26e0-f862-4126-b93f-6dc96f84643d",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "8a12dafe-f744-4c62-947a-cc0b11fa8867",
+      "name": "Webhook",
+      "webhookId": "6dca26e0-f862-4126-b93f-6dc96f84643d"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.retellai.com/v2/create-web-call",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer key_a1bbb976e274b8ec1d06655cacd0"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"agent_id\": \"agent_f4b450a0d3e13642054615767d\",\n  \"agent_version\": 1,\n  \"metadata\": {}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "96dce9d8-bde6-4db0-8210-5a4a8e8d6b1b",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        440,
+        0
+      ],
+      "id": "aca3ebdb-0acc-457c-b5ff-67f22412ab2b",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "e7f71fe2-7384-44cb-8543-23412f90d070",
+  "triggerCount": 1,
+  "tags": []
+}
