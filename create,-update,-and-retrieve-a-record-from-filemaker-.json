@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-06-11T18:55:58.892Z",
-  "updatedAt": "2025-07-22T16:55:19.000Z",
+  "updatedAt": "2025-07-28T16:42:00.000Z",
   "id": "J9zTwlo7k7LLUFBZ",
   "name": "Create, update, and retrieve a record from FileMaker",
   "active": true,
@@ -59,46 +59,6 @@
         "openAiApi": {
           "id": "Z9tGwUwFTMTG2mbT",
           "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "action": "find",
-        "layout": "Patient Input",
-        "getPortals": true,
-        "portals": [
-          "Appointments",
-          []
-        ],
-        "responseLayout": "Patient Input",
-        "queries": {
-          "query": [
-            {
-              "fields": {
-                "field": [
-                  {
-                    "name": "FullName",
-                    "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Value', ``, 'string') }}"
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.filemakerTool",
-      "typeVersion": 1,
-      "position": [
-        -300,
-        400
-      ],
-      "id": "5c8af2e8-740c-4e2a-9c3e-fea22cd4a27f",
-      "name": "FileMaker4",
-      "credentials": {
-        "fileMaker": {
-          "id": "olW7Z34cJ8ZnzTko",
-          "name": "FileMaker account"
         }
       }
     },
@@ -166,42 +126,6 @@
     },
     {
       "parameters": {
-        "action": "find",
-        "layout": "Patient Input",
-        "getPortals": "",
-        "responseLayout": "Patient Input",
-        "queries": {
-          "query": [
-            {
-              "fields": {
-                "field": [
-                  {
-                    "name": "FullName",
-                    "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Value', `You need to find the IDReferral from the user data tool ID`, 'string') }}"
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.filemakerTool",
-      "typeVersion": 1,
-      "position": [
-        -440,
-        400
-      ],
-      "id": "2e835631-8be2-4e56-a04d-f06267db67dd",
-      "name": "Appointment",
-      "credentials": {
-        "fileMaker": {
-          "id": "olW7Z34cJ8ZnzTko",
-          "name": "FileMaker account"
-        }
-      }
-    },
-    {
-      "parameters": {
         "path": "7ac79dc1-e636-42d7-8c3f-91a1f254c31a",
         "responseMode": "responseNode",
         "options": {}
@@ -228,6 +152,82 @@
       ],
       "id": "ab670950-caa3-43f4-a468-4b62f5fe15ed",
       "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "action": "find",
+        "layout": "Patient Input",
+        "getPortals": true,
+        "portals": [
+          "Appointments",
+          []
+        ],
+        "responseLayout": "Patient Input",
+        "queries": {
+          "query": [
+            {
+              "fields": {
+                "field": [
+                  {
+                    "name": "FullName",
+                    "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Value', ``, 'string') }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.filemakerTool",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        400
+      ],
+      "id": "5c8af2e8-740c-4e2a-9c3e-fea22cd4a27f",
+      "name": "Fetch Appointment",
+      "credentials": {
+        "fileMaker": {
+          "id": "olW7Z34cJ8ZnzTko",
+          "name": "FileMaker account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "action": "create",
+        "layout": "Appointments",
+        "fieldsParametersUi": {
+          "fields": [
+            {
+              "name": "TimeBegin",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fields0_Value', ``, 'string') }}"
+            },
+            {
+              "name": "ApptDate",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fields1_Value', ``, 'string') }}"
+            },
+            {
+              "name": "TimeEnd",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fields2_Value', ``, 'string') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.filemakerTool",
+      "typeVersion": 1,
+      "position": [
+        -440,
+        400
+      ],
+      "id": "2e835631-8be2-4e56-a04d-f06267db67dd",
+      "name": "Create Appointment",
+      "credentials": {
+        "fileMaker": {
+          "id": "olW7Z34cJ8ZnzTko",
+          "name": "FileMaker account"
+        }
+      }
     }
   ],
   "connections": {
@@ -248,17 +248,6 @@
           {
             "node": "AI Agent",
             "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "FileMaker4": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -297,7 +286,18 @@
         ]
       ]
     },
-    "Appointment": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Appointment": {
       "ai_tool": [
         [
           {
@@ -308,12 +308,12 @@
         ]
       ]
     },
-    "Webhook": {
-      "main": [
+    "Create Appointment": {
+      "ai_tool": [
         [
           {
             "node": "AI Agent",
-            "type": "main",
+            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -328,7 +328,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "92a3298e-1b13-474c-9cb2-c5e385a53887",
+  "versionId": "f1684346-8301-4f18-9060-af2231fc0c38",
   "triggerCount": 3,
   "tags": []
 }
