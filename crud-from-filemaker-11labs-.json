@@ -1,17 +1,17 @@
 {
   "createdAt": "2025-06-12T17:41:06.100Z",
-  "updatedAt": "2025-07-23T17:12:19.000Z",
+  "updatedAt": "2025-07-29T18:40:20.000Z",
   "id": "JLyCYSTwmfXnuI8k",
   "name": "CRUD from FileMaker 11Labs",
-  "active": true,
-  "isArchived": false,
+  "active": false,
+  "isArchived": true,
   "nodes": [
     {
       "parameters": {
         "promptType": "define",
         "text": "=User Input: {{ $json.query.request }}.\n\nCurrent time: {{ $now.toLocal().toString() }}\n  ",
         "options": {
-          "systemMessage": "You are a helpful assistant. Look at the user query and you need to find answers to that from the buffer or tools available with you. \n\nYou will trigger FileMaker tool to find the user data if it doesn't exist in the buffer/memory.\n\nYour reply to any query has to be precise of what asked and don't need to ask users for more questions.",
+          "systemMessage": "You are a helpful assistant. Look at the user query and you need to find answers to that from the buffer or tools available with you. \n\nYou will trigger FileMaker tool to find the user data if it doesn't exist in the buffer/memory.\n\nYour reply to any query has to be precise of what asked and don't need to ask users for more questions.\n\nIf the user asks information about patients details first grab the first and last name if provided and then query the find patient tool. That will give you details about the patient.",
           "returnIntermediateSteps": false
         }
       },
@@ -45,26 +45,6 @@
         "openAiApi": {
           "id": "Z9tGwUwFTMTG2mbT",
           "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "action": "find",
-        "layout": "Patient Input"
-      },
-      "type": "n8n-nodes-base.filemakerTool",
-      "typeVersion": 1,
-      "position": [
-        660,
-        240
-      ],
-      "id": "5dbadba8-df83-4f28-a9cb-fb59d5b6087d",
-      "name": "FileMaker4",
-      "credentials": {
-        "fileMaker": {
-          "id": "olW7Z34cJ8ZnzTko",
-          "name": "FileMaker account"
         }
       }
     },
@@ -168,11 +148,31 @@
       "type": "n8n-nodes-base.filemakerTool",
       "typeVersion": 1,
       "position": [
-        820,
+        960,
         240
       ],
       "id": "2861dc60-6d70-401e-924b-4cb22db2caf2",
       "name": "Create Appointment",
+      "credentials": {
+        "fileMaker": {
+          "id": "olW7Z34cJ8ZnzTko",
+          "name": "FileMaker account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "action": "find",
+        "layout": "Patient Input"
+      },
+      "type": "n8n-nodes-base.filemakerTool",
+      "typeVersion": 1,
+      "position": [
+        780,
+        240
+      ],
+      "id": "5dbadba8-df83-4f28-a9cb-fb59d5b6087d",
+      "name": "Find Patient Details",
       "credentials": {
         "fileMaker": {
           "id": "olW7Z34cJ8ZnzTko",
@@ -188,17 +188,6 @@
           {
             "node": "AI Agent",
             "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "FileMaker4": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -258,6 +247,17 @@
           }
         ]
       ]
+    },
+    "Find Patient Details": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -268,7 +268,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "95c5b58a-ef8d-4c45-8569-e390b66f27ed",
+  "versionId": "27f6f79c-ee23-4ca4-91c9-1289d0a5b7fd",
   "triggerCount": 1,
   "tags": []
 }
