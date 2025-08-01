@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-06-11T18:55:58.892Z",
-  "updatedAt": "2025-07-29T19:20:56.000Z",
+  "updatedAt": "2025-07-31T17:46:59.000Z",
   "id": "J9zTwlo7k7LLUFBZ",
   "name": "Create, update, and retrieve a record from FileMaker, Telegram",
   "active": true,
@@ -32,7 +32,7 @@
       "typeVersion": 1.1,
       "position": [
         -1160,
-        280
+        140
       ],
       "id": "290d4218-f8a2-4e08-a29d-c1b73b625ad1",
       "name": "When chat message received",
@@ -51,7 +51,7 @@
       "typeVersion": 1.2,
       "position": [
         -860,
-        440
+        380
       ],
       "id": "c11e4457-51ad-4735-a91d-21e6487e74a4",
       "name": "OpenAI Chat Model",
@@ -73,7 +73,7 @@
       "typeVersion": 1.1,
       "position": [
         -1160,
-        80
+        -60
       ],
       "id": "f8162a23-29f3-461b-9027-ccea4ce72c28",
       "name": "Telegram Trigger",
@@ -119,7 +119,7 @@
       "typeVersion": 1.3,
       "position": [
         -680,
-        420
+        380
       ],
       "id": "eaabbc76-8191-47ce-a66a-cf592464682c",
       "name": "Window Buffer Memory"
@@ -134,7 +134,7 @@
       "typeVersion": 2,
       "position": [
         -1160,
-        520
+        380
       ],
       "id": "5859d034-d79c-495f-b64a-933de41ad9fc",
       "name": "Webhook",
@@ -155,66 +155,30 @@
     },
     {
       "parameters": {
-        "action": "find",
-        "layout": "Patient Input",
-        "getPortals": true,
-        "portals": [
-          "Appointments",
-          []
-        ],
-        "responseLayout": "Patient Input",
-        "queries": {
-          "query": [
-            {
-              "fields": {
-                "field": [
-                  {
-                    "name": "FullName",
-                    "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Value', ``, 'string') }}"
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.filemakerTool",
-      "typeVersion": 1,
-      "position": [
-        -240,
-        400
-      ],
-      "id": "5c8af2e8-740c-4e2a-9c3e-fea22cd4a27f",
-      "name": "Fetch Appointment",
-      "credentials": {
-        "fileMaker": {
-          "id": "olW7Z34cJ8ZnzTko",
-          "name": "FileMaker account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "toolDescription": "Create appointment using the date time and booking details",
+        "toolDescription": "Create appointment using the date time and booking details. First find the patient details for which the appointment needs to be created",
         "action": "create",
         "layout": "Appointments",
         "fieldsParametersUi": {
           "fields": [
             {
               "name": "TimeBegin",
-              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fields0_Value', `this will be a time in format HH:mm`, 'string') }}"
-            },
-            {
-              "name": "ApptDate",
-              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fields1_Value', `this is a date format using DD-MM-YYYY`, 'string') }}"
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fields0_Value', `this is the start of the appointment time HH:mm`, 'string') }}"
             },
             {
               "name": "TimeEnd",
-              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fields2_Value', `This will be +60 minutes from the TimeBegin variable`, 'string') }}"
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fields1_Value', `This will be +60 minutes from the TimeBegin variable`, 'string') }}"
             },
             {
-              "name": "Patient_Full_Name",
-              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fields3_Value', `you will ask the user about the user names and verify it from the database`, 'string') }}"
+              "name": "ApptDate",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fields2_Value', `this is a date format using MM/DD/YYYY`, 'string') }}"
+            },
+            {
+              "name": "IDReferral",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fields3_Value', `this is the patient ID that you can fetch from the Fetch Patient tool`, 'string') }}"
+            },
+            {
+              "name": "Type",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('fields4_Value', `this is appointment type which you can fetch from the Fetch appointment type tool and input the Type field after matching the name from the user.`, 'string') }}"
             }
           ]
         }
@@ -222,8 +186,8 @@
       "type": "n8n-nodes-base.filemakerTool",
       "typeVersion": 1,
       "position": [
-        -440,
-        400
+        -140,
+        420
       ],
       "id": "2e835631-8be2-4e56-a04d-f06267db67dd",
       "name": "Create Appointment",
@@ -267,6 +231,68 @@
       ],
       "id": "68884456-2d1a-429c-bffa-58d70429a107",
       "name": "If"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Retrieve data from the FileMaker data API. Fetch the patient data including their appointment.",
+        "action": "find",
+        "layout": "Patient Input",
+        "getPortals": true,
+        "portals": [
+          "Appointments",
+          []
+        ],
+        "responseLayout": "Patient Input",
+        "queries": {
+          "query": [
+            {
+              "fields": {
+                "field": [
+                  {
+                    "name": "FullName",
+                    "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Value', ``, 'string') }}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.filemakerTool",
+      "typeVersion": 1,
+      "position": [
+        40,
+        420
+      ],
+      "id": "5c8af2e8-740c-4e2a-9c3e-fea22cd4a27f",
+      "name": "Fetch Patient Data",
+      "credentials": {
+        "fileMaker": {
+          "id": "olW7Z34cJ8ZnzTko",
+          "name": "FileMaker account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Retrieve data about appointment types. You need to use the fields recordId, Duration, appt_type_ID and Type to be fed to the agent. Please exclude the data from DBK_WebViewerData field to be passed anywhere",
+        "action": "records",
+        "layout": "AppointmentTypes"
+      },
+      "type": "n8n-nodes-base.filemakerTool",
+      "typeVersion": 1,
+      "position": [
+        -340,
+        420
+      ],
+      "id": "c50a2c3a-45c7-4071-a290-a1ad062e6772",
+      "name": "Fetch Appointment Type",
+      "credentials": {
+        "fileMaker": {
+          "id": "olW7Z34cJ8ZnzTko",
+          "name": "FileMaker account"
+        }
+      }
     }
   ],
   "connections": {
@@ -336,17 +362,6 @@
         ]
       ]
     },
-    "Fetch Appointment": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Create Appointment": {
       "ai_tool": [
         [
@@ -375,6 +390,28 @@
           }
         ]
       ]
+    },
+    "Fetch Patient Data": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Appointment Type": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -385,7 +422,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "90fbcce4-cb9e-4cef-8fef-6b9f3cb6970c",
+  "versionId": "4c1a9205-5dc4-4ddc-82d9-8233bd9a082d",
   "triggerCount": 3,
   "tags": []
 }
