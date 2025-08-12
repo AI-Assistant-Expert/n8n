@@ -1,0 +1,19 @@
+{
+  "createdAt": "2025-08-11T07:09:19.827Z",
+  "updatedAt": "2025-08-11T07:09:19.000Z",
+  "id": "FycJL3paiph3qGn7",
+  "name": "Cal.com Scheduler Generic",
+  "active": false,
+  "isArchived": false,
+  "nodes": [],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "ec10f4f0-5077-48de-ae5d-b32ed26fcba6",
+  "triggerCount": 0,
+  "tags": []
+}
