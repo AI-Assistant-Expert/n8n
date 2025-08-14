@@ -1,0 +1,290 @@
+{
+  "createdAt": "2025-08-13T09:33:51.848Z",
+  "updatedAt": "2025-08-13T18:24:26.000Z",
+  "id": "j2eeK9MXwPAgf7wV",
+  "name": "MCP cal.com server for Google Calendar",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "operation",
+              "value": "={{ $json.operation || 'unknown' }}"
+            },
+            {
+              "name": "requestId",
+              "value": "={{ $json.requestId || $now.toString() }}"
+            },
+            {
+              "name": "timestamp",
+              "value": "={{ $now }}"
+            },
+            {
+              "name": "authToken",
+              "value": "={{ $json.auth_token || $json.apiKey || '' }}"
+            },
+            {
+              "name": "rawPayload",
+              "value": "={{ JSON.stringify($json) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2c94a294-2f31-4e29-b04a-cd4d9ce98357",
+      "name": "Initialize Variables",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        -1840,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// MCP Server Input Validation\nconst input = $input.all()[0].json;\nconst operation = input.operation;\nconst authToken = input.authToken;\nconst requestId = input.requestId;\n\n// Define allowed operations\nconst allowedOperations = ['schedule', 'list', 'reschedule', 'cancel'];\nlet validationErrors = [];\n\n// Basic operation validation\nif (!operation || !allowedOperations.includes(operation)) {\n  validationErrors.push(`Invalid operation: '${operation}'. Allowed operations: ${allowedOperations.join(', ')}`);\n}\n\n// Authentication validation\nif (!authToken) {\n  validationErrors.push('Authentication token (auth_token or apiKey) is required');\n} else if (!authToken.startsWith('cal_')) {\n  validationErrors.push('Invalid Cal.com API token format. Token should start with \"cal_\"');\n}\n\n// Operation-specific validation\nswitch (operation) {\n  case 'schedule':\n    const booking = input.booking;\n    if (!booking) {\n      validationErrors.push('booking object is required for schedule operation');\n    } else {\n      if (!booking.start) {\n        validationErrors.push('booking.start is required (ISO 8601 format)');\n      } else {\n        // Validate date format\n        const dateRegex = /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z?$/;\n        if (!dateRegex.test(booking.start)) {\n          validationErrors.push('booking.start must be in ISO 8601 format (e.g., 2024-08-13T09:00:00Z)');\n        }\n      }\n      \n      if (!booking.attendee) {\n        validationErrors.push('booking.attendee object is required');\n      } else {\n        if (!booking.attendee.name) {\n          validationErrors.push('booking.attendee.name is required');\n        }\n        if (!booking.attendee.email) {\n          validationErrors.push('booking.attendee.email is required');\n        } else {\n          // Basic email validation\n          const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\n          if (!emailRegex.test(booking.attendee.email)) {\n            validationErrors.push('booking.attendee.email must be a valid email address');\n          }\n        }\n      }\n      \n      if (!booking.eventTypeId && !booking.eventTypeSlug) {\n        validationErrors.push('Either booking.eventTypeId or booking.eventTypeSlug is required');\n      }\n    }\n    break;\n    \n  case 'reschedule':\n    if (!input.bookingUid) {\n      validationErrors.push('bookingUid is required for reschedule operation');\n    }\n    const reschedule = input.reschedule;\n    if (!reschedule || !reschedule.start) {\n      validationErrors.push('reschedule.start is required (ISO 8601 format)');\n    } else {\n      const dateRegex = /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z?$/;\n      if (!dateRegex.test(reschedule.start)) {\n        validationErrors.push('reschedule.start must be in ISO 8601 format');\n      }\n    }\n    break;\n    \n  case 'cancel':\n    if (!input.bookingUid) {\n      validationErrors.push('bookingUid is required for cancel operation');\n    }\n    break;\n    \n  case 'list':\n    // List operation has optional filters, no required fields\n    break;\n}\n\n// Return validation result\nif (validationErrors.length > 0) {\n  return [{\n    json: {\n      success: false,\n      operation,\n      requestId,\n      validationFailed: true,\n      error: {\n        code: 'VALIDATION_ERROR',\n        message: 'Input validation failed',\n        details: {\n          validationErrors,\n          receivedData: input\n        }\n      },\n      metadata: {\n        timestamp: new Date().toISOString(),\n        processingTime: 0\n      }\n    }\n  }];\n}\n\n// Return validated input with success flag\nreturn [{\n  json: {\n    ...input,\n    validated: true,\n    success: true,\n    operation,\n    requestId,\n    authToken\n  }\n}];"
+      },
+      "id": "254e2072-23a6-45a0-87d3-c8105a574a34",
+      "name": "Input Validator",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -1620,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.validationFailed }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "3498174b-ba50-4ead-852b-f76ae72dc5df",
+      "name": "Validation Router",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -1400,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "options": {}
+      },
+      "id": "7639e843-47dc-42a5-b6de-09be20e5b6a3",
+      "name": "AI Enhancement",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        -1180,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process AI Enhancement Response\nconst originalInput = $input.all()[0].json;\nconst aiResponse = $input.all()[1]?.json;\n\nlet enhancedData = { ...originalInput };\nlet aiEnhanced = false;\nlet aiError = null;\n\n// Process AI response if available\nif (aiResponse && aiResponse.choices && aiResponse.choices[0]) {\n  try {\n    const aiContent = aiResponse.choices[0].message.content;\n    \n    // Try to parse AI response as JSON\n    let aiSuggestions;\n    try {\n      aiSuggestions = JSON.parse(aiContent);\n    } catch (parseError) {\n      // If AI response is not valid JSON, try to extract JSON from text\n      const jsonMatch = aiContent.match(/\\{[\\s\\S]*\\}/);\n      if (jsonMatch) {\n        aiSuggestions = JSON.parse(jsonMatch[0]);\n      } else {\n        throw new Error('AI response does not contain valid JSON');\n      }\n    }\n    \n    // Merge AI enhancements with original data\n    if (aiSuggestions && typeof aiSuggestions === 'object') {\n      // For schedule operations, enhance booking data\n      if (originalInput.operation === 'schedule' && aiSuggestions.booking) {\n        enhancedData.booking = {\n          ...originalInput.booking,\n          ...aiSuggestions.booking\n        };\n        \n        // Ensure attendee data is properly merged\n        if (originalInput.booking?.attendee && aiSuggestions.booking?.attendee) {\n          enhancedData.booking.attendee = {\n            ...originalInput.booking.attendee,\n            ...aiSuggestions.booking.attendee\n          };\n        }\n      }\n      \n      // For other operations, merge relevant fields\n      if (aiSuggestions.reschedule && originalInput.operation === 'reschedule') {\n        enhancedData.reschedule = {\n          ...originalInput.reschedule,\n          ...aiSuggestions.reschedule\n        };\n      }\n      \n      if (aiSuggestions.filters && originalInput.operation === 'list') {\n        enhancedData.filters = {\n          ...originalInput.filters,\n          ...aiSuggestions.filters\n        };\n      }\n      \n      aiEnhanced = true;\n    }\n    \n  } catch (error) {\n    aiError = error.message;\n    console.log('AI Enhancement Error:', error.message);\n  }\n}\n\n// Return enhanced data with AI metadata\nreturn [{\n  json: {\n    ...enhancedData,\n    aiEnhanced,\n    aiError,\n    originalData: originalInput\n  }\n}];"
+      },
+      "id": "99a5f2b1-f843-4593-aec7-3d0d1da8d38e",
+      "name": "AI Response Processor",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -960,
+        0
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "642e6d0c-0e89-46c5-995e-be20ab290a4e",
+      "name": "Operation Router",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        -740,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.cal.com/v2/bookings",
+        "options": {}
+      },
+      "id": "f318fe73-b356-4df4-a4a2-87b565be5e93",
+      "name": "Schedule Booking",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        -520,
+        -100
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.cal.com/v2/bookings",
+        "options": {}
+      },
+      "id": "3db0df2c-f743-4ddb-b73e-5963a1bdef6a",
+      "name": "List Bookings",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        -520,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.cal.com/v2/bookings/{{ $json.bookingUid }}/reschedule",
+        "options": {}
+      },
+      "id": "ac04ac8f-f059-40f4-aff9-2fe17cdcb5f5",
+      "name": "Reschedule Booking",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        -520,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.cal.com/v2/bookings/{{ $json.bookingUid }}/cancel",
+        "options": {}
+      },
+      "id": "1413891e-9352-4084-8275-9160295474a4",
+      "name": "Cancel Booking",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        -1580,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Format successful Cal.com API response\nconst input = $input.all()[0].json;\nconst operation = input.operation;\nconst requestId = input.requestId;\nconst startTime = parseInt(requestId);\nconst processingTime = Date.now() - startTime;\n\n// Handle different response structures from Cal.com API\nlet responseData;\nif (input.data) {\n  responseData = input.data;\n} else {\n  // If the response is the data itself (not wrapped in a data property)\n  const { operation: op, requestId: reqId, authToken, validated, aiEnhanced, originalData, ...apiData } = input;\n  responseData = apiData;\n}\n\n// Create standardized success response\nconst response = {\n  success: true,\n  operation,\n  requestId,\n  data: responseData,\n  metadata: {\n    timestamp: new Date().toISOString(),\n    processingTime,\n    aiEnhanced: input.aiEnhanced || false,\n    calApiVersion: '2024-08-13'\n  }\n};\n\n// Add operation-specific metadata\nswitch (operation) {\n  case 'schedule':\n    response.metadata.bookingCreated = true;\n    if (responseData.uid) {\n      response.metadata.bookingUid = responseData.uid;\n    }\n    break;\n  case 'list':\n    if (responseData.pagination) {\n      response.metadata.pagination = responseData.pagination;\n    }\n    response.metadata.bookingCount = Array.isArray(responseData) ? responseData.length : (responseData.data ? responseData.data.length : 0);\n    break;\n  case 'reschedule':\n    response.metadata.bookingRescheduled = true;\n    break;\n  case 'cancel':\n    response.metadata.bookingCancelled = true;\n    break;\n}\n\nreturn [{ json: response }];"
+      },
+      "id": "a60816bd-6b2e-438f-8a16-f54fb34af14e",
+      "name": "Success Response Formatter",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -300,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Format error response from validation or API calls\nconst input = $input.all()[0].json;\nconst operation = input.operation || 'unknown';\nconst requestId = input.requestId || Date.now().toString();\n\n// Check if this is a validation error\nif (input.validationFailed) {\n  return [{ json: input }];\n}\n\n// Handle Cal.com API errors\nlet errorResponse;\nif (input.error) {\n  // This is already a formatted error from validation\n  errorResponse = input;\n} else {\n  // This is likely an HTTP error from Cal.com API\n  const statusCode = input.statusCode || 500;\n  const errorMessage = input.message || input.error || 'Unknown error occurred';\n  \n  let errorCode = 'CAL_API_ERROR';\n  let userMessage = 'An error occurred while processing your request';\n  \n  // Categorize errors based on status code\n  if (statusCode >= 400 && statusCode < 500) {\n    errorCode = 'CLIENT_ERROR';\n    if (statusCode === 401) {\n      errorCode = 'AUTHENTICATION_ERROR';\n      userMessage = 'Invalid or expired Cal.com API token';\n    } else if (statusCode === 403) {\n      errorCode = 'AUTHORIZATION_ERROR';\n      userMessage = 'Insufficient permissions for this operation';\n    } else if (statusCode === 404) {\n      errorCode = 'NOT_FOUND_ERROR';\n      userMessage = 'Requested resource not found';\n    } else if (statusCode === 429) {\n      errorCode = 'RATE_LIMIT_ERROR';\n      userMessage = 'Rate limit exceeded. Please try again later';\n    } else {\n      userMessage = 'Invalid request parameters';\n    }\n  } else if (statusCode >= 500) {\n    errorCode = 'SERVER_ERROR';\n    userMessage = 'Cal.com service is temporarily unavailable';\n  }\n  \n  errorResponse = {\n    success: false,\n    operation,\n    requestId,\n    error: {\n      code: errorCode,\n      message: userMessage,\n      details: {\n        statusCode,\n        originalError: errorMessage,\n        calApiResponse: input\n      }\n    },\n    metadata: {\n      timestamp: new Date().toISOString(),\n      processingTime: Date.now() - parseInt(requestId),\n      errorOccurred: true\n    }\n  };\n}\n\nreturn [{ json: errorResponse }];"
+      },
+      "id": "0bab00d6-7617-42c6-831b-e22877e83837",
+      "name": "Error Response Formatter",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -300,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json, null, 2) }}",
+        "options": {}
+      },
+      "id": "a3f541a5-efdf-41f9-946f-95d07f1acb96",
+      "name": "Success Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json, null, 2) }}",
+        "options": {}
+      },
+      "id": "af073e4a-043d-4615-91f4-6326fb52b9c9",
+      "name": "Error Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "path": "33cc866a-0867-4649-b5d9-079da509646b"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1220,
+        -340
+      ],
+      "id": "55c4ac12-960b-4b2e-8f1b-3f24a109719c",
+      "name": "MCP Server Trigger",
+      "webhookId": "33cc866a-0867-4649-b5d9-079da509646b"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.cal.com/v2/bookings/{{ $json.bookingUid }}/cancel",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -1400,
+        -60
+      ],
+      "id": "b0c4ce3b-5b70-4cfb-88b9-2640a5121b27",
+      "name": "Cancel Booking1"
+    }
+  ],
+  "connections": {
+    "Cancel Booking1": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "9924a138-8480-4475-97e0-5e8f4a32ba8d",
+  "triggerCount": 0,
+  "tags": []
+}
