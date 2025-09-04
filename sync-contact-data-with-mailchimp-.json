@@ -1,0 +1,110 @@
+{
+  "createdAt": "2025-09-03T17:26:17.654Z",
+  "updatedAt": "2025-09-03T17:59:59.000Z",
+  "id": "S4AH072hNuJjJRoW",
+  "name": "Sync contact data with mailchimp",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "path": "sync-property-contact",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -544,
+        -64
+      ],
+      "id": "b8d01e79-43be-4af0-8cb1-a6edb6fd5f44",
+      "name": "Webhook",
+      "webhookId": "2ba1b436-ebbd-4888-abc1-d6ab94473001"
+    },
+    {
+      "parameters": {
+        "list": "ac3e522bbb",
+        "email": "test",
+        "status": "subscribed",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mailchimp",
+      "typeVersion": 1,
+      "position": [
+        240,
+        32
+      ],
+      "id": "eaf5bc5c-b97e-4238-bdde-1bfdf9faade8",
+      "name": "Create a member",
+      "credentials": {
+        "mailchimpApi": {
+          "id": "XnPzQvwuSbZyHilP",
+          "name": "Mailchimp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "recid": 0
+      },
+      "type": "n8n-nodes-base.filemaker",
+      "typeVersion": 1,
+      "position": [
+        -336,
+        -64
+      ],
+      "id": "ffb64f95-bc24-4593-aae1-ee5c42fe832d",
+      "name": "FileMaker",
+      "credentials": {
+        "fileMaker": {
+          "id": "PW6pGcMe9Qw46uQO",
+          "name": "Jhonson Pacific"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "FileMaker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FileMaker": {
+      "main": [
+        [
+          {
+            "node": "Create a member",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "2cfa5a06-6e74-45fa-ae07-f67f488ad8d4",
+  "triggerCount": 0,
+  "shared": [
+    {
+      "createdAt": "2025-09-03T17:26:17.666Z",
+      "updatedAt": "2025-09-03T17:26:17.666Z",
+      "role": "workflow:owner",
+      "workflowId": "S4AH072hNuJjJRoW",
+      "projectId": "Z6BlTuoUTOQM01FP"
+    }
+  ],
+  "tags": []
+}
