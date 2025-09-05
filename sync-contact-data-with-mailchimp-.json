@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-09-03T17:26:17.654Z",
-  "updatedAt": "2025-09-03T17:59:59.000Z",
+  "updatedAt": "2025-09-04T17:28:20.000Z",
   "id": "S4AH072hNuJjJRoW",
   "name": "Sync contact data with mailchimp",
   "active": false,
@@ -45,20 +45,22 @@
     },
     {
       "parameters": {
-        "recid": 0
+        "action": "edit",
+        "recid": 0,
+        "modId": 0
       },
       "type": "n8n-nodes-base.filemaker",
       "typeVersion": 1,
       "position": [
-        -336,
+        -192,
         -64
       ],
       "id": "ffb64f95-bc24-4593-aae1-ee5c42fe832d",
       "name": "FileMaker",
       "credentials": {
         "fileMaker": {
-          "id": "PW6pGcMe9Qw46uQO",
-          "name": "Jhonson Pacific"
+          "id": "fW2zpei78ted4yw5",
+          "name": "johnston pacific"
         }
       }
     }
@@ -95,7 +97,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "2cfa5a06-6e74-45fa-ae07-f67f488ad8d4",
+  "versionId": "ff038e87-78d3-40cf-987e-c79438ce0820",
   "triggerCount": 0,
   "shared": [
     {
