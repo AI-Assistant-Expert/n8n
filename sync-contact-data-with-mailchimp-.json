@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-09-03T17:26:17.654Z",
-  "updatedAt": "2025-09-04T17:28:20.000Z",
+  "updatedAt": "2025-09-05T17:47:20.000Z",
   "id": "S4AH072hNuJjJRoW",
   "name": "Sync contact data with mailchimp",
   "active": false,
@@ -31,7 +31,7 @@
       "type": "n8n-nodes-base.mailchimp",
       "typeVersion": 1,
       "position": [
-        240,
+        448,
         32
       ],
       "id": "eaf5bc5c-b97e-4238-bdde-1bfdf9faade8",
@@ -52,15 +52,34 @@
       "type": "n8n-nodes-base.filemaker",
       "typeVersion": 1,
       "position": [
-        -192,
+        16,
         -64
       ],
       "id": "ffb64f95-bc24-4593-aae1-ee5c42fe832d",
       "name": "FileMaker",
       "credentials": {
         "fileMaker": {
-          "id": "fW2zpei78ted4yw5",
-          "name": "johnston pacific"
+          "id": "Y2ssJawBIauhCz3q",
+          "name": "FileMaker account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "action": "find"
+      },
+      "type": "n8n-nodes-base.filemaker",
+      "typeVersion": 1,
+      "position": [
+        -336,
+        -64
+      ],
+      "id": "04ef325b-2a0c-45fc-b882-7914d177f78b",
+      "name": "FileMaker1",
+      "credentials": {
+        "fileMaker": {
+          "id": "Y2ssJawBIauhCz3q",
+          "name": "FileMaker account 3"
         }
       }
     }
@@ -70,7 +89,7 @@
       "main": [
         [
           {
-            "node": "FileMaker",
+            "node": "FileMaker1",
             "type": "main",
             "index": 0
           }
@@ -87,6 +106,17 @@
           }
         ]
       ]
+    },
+    "FileMaker1": {
+      "main": [
+        [
+          {
+            "node": "FileMaker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -97,7 +127,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "ff038e87-78d3-40cf-987e-c79438ce0820",
+  "versionId": "23c0b187-c636-4953-bc81-def35e9c28f9",
   "triggerCount": 0,
   "shared": [
     {
