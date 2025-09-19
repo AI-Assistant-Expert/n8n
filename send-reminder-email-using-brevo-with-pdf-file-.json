@@ -1,0 +1,133 @@
+{
+  "createdAt": "2025-09-18T11:20:53.143Z",
+  "updatedAt": "2025-09-18T11:29:06.000Z",
+  "id": "JlWOyF2Em0lZsLts",
+  "name": "Send reminder email using Brevo with PDF file",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "path": "send-email-reminder-invoice",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -448,
+        -16
+      ],
+      "id": "4325c8cc-4d48-475a-9694-fb045f9a81ce",
+      "name": "Webhook",
+      "webhookId": "be30fc0f-7dea-4e06-b2a5-a4b70197da5b"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        592,
+        -32
+      ],
+      "id": "9d08e7e3-e776-43b7-9d9f-6115b2cbcb55",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "additionalFields": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.sendInBlue",
+      "typeVersion": 1,
+      "position": [
+        336,
+        -16
+      ],
+      "id": "9fa21037-67a0-46e8-8cfe-b9d4c72fc92c",
+      "name": "Send a transactional email",
+      "credentials": {
+        "sendInBlueApi": {
+          "id": "2qHrN2WpTUI5fGj0",
+          "name": "Brevo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "recid": 0
+      },
+      "type": "n8n-nodes-base.filemaker",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -16
+      ],
+      "id": "42ea6666-9adc-4961-9061-a8505db0f2fc",
+      "name": "FileMaker",
+      "credentials": {
+        "fileMaker": {
+          "id": "ryD8qaQiHB0K3Vpm",
+          "name": "MTC Server FM"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "FileMaker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a transactional email": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FileMaker": {
+      "main": [
+        [
+          {
+            "node": "Send a transactional email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "e763829d-4a63-4f97-bd01-c282a39fcb9c",
+  "triggerCount": 0,
+  "shared": [
+    {
+      "createdAt": "2025-09-18T11:20:53.151Z",
+      "updatedAt": "2025-09-18T11:20:53.151Z",
+      "role": "workflow:owner",
+      "workflowId": "JlWOyF2Em0lZsLts",
+      "projectId": "Z6BlTuoUTOQM01FP"
+    }
+  ],
+  "tags": []
+}
