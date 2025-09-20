@@ -1,10 +1,10 @@
 {
   "createdAt": "2025-09-18T11:20:53.143Z",
-  "updatedAt": "2025-09-18T11:29:06.000Z",
+  "updatedAt": "2025-09-19T07:32:32.000Z",
   "id": "JlWOyF2Em0lZsLts",
   "name": "Send reminder email using Brevo with PDF file",
   "active": false,
-  "isArchived": false,
+  "isArchived": true,
   "nodes": [
     {
       "parameters": {
@@ -43,8 +43,8 @@
       "type": "n8n-nodes-base.sendInBlue",
       "typeVersion": 1,
       "position": [
-        336,
-        -16
+        0,
+        16
       ],
       "id": "9fa21037-67a0-46e8-8cfe-b9d4c72fc92c",
       "name": "Send a transactional email",
@@ -54,25 +54,6 @@
           "name": "Brevo account"
         }
       }
-    },
-    {
-      "parameters": {
-        "recid": 0
-      },
-      "type": "n8n-nodes-base.filemaker",
-      "typeVersion": 1,
-      "position": [
-        -240,
-        -16
-      ],
-      "id": "42ea6666-9adc-4961-9061-a8505db0f2fc",
-      "name": "FileMaker",
-      "credentials": {
-        "fileMaker": {
-          "id": "ryD8qaQiHB0K3Vpm",
-          "name": "MTC Server FM"
-        }
-      }
     }
   ],
   "connections": {
@@ -80,7 +61,7 @@
       "main": [
         [
           {
-            "node": "FileMaker",
+            "node": "Send a transactional email",
             "type": "main",
             "index": 0
           }
@@ -97,17 +78,6 @@
           }
         ]
       ]
-    },
-    "FileMaker": {
-      "main": [
-        [
-          {
-            "node": "Send a transactional email",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "settings": {
@@ -118,7 +88,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "e763829d-4a63-4f97-bd01-c282a39fcb9c",
+  "versionId": "2e6ddc15-5346-421f-ab3f-520d9125fd88",
   "triggerCount": 0,
   "shared": [
     {
