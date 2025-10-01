@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-09-24T18:27:31.937Z",
-  "updatedAt": "2025-09-25T19:24:08.000Z",
+  "updatedAt": "2025-09-30T19:11:59.000Z",
   "id": "fojVVANDW7b0JKTu",
   "name": "Sync Additional Occupants data with mailchimp",
   "active": true,
@@ -64,6 +64,10 @@
             {
               "name": "=XMASCARD",
               "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_xmascard' + $('Extract Tab Index').item.json.tab_code] || 'N' }}"
+            },
+            {
+              "name": "MMERGE11",
+              "value": "Occupant"
             }
           ]
         }
@@ -213,7 +217,7 @@
         "nodeCredentialType": "mailchimpApi",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"merge_fields\": {\n    \"FNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_First' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"LNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_Last' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"COMPANY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_Organization' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"BLDGCITY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.CITY }}\",\n    \"BLDGSIZE\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.BUILDING_SIZE }}\",\n    \"CLIENT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_client' + $('Extract Tab Index').item.json.tab_code] || 'N' }}\",\n    \"NWSLETR\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_newsletter' + $('Extract Tab Index').item.json.tab_code]  || 'N' }}\",\n    \"CLIENTGFT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_client_gift' + $('Extract Tab Index').item.json.tab_code]  || 'N' }}\",\n    \"XMASCARD\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_xmascard' + $('Extract Tab Index').item.json.tab_code]  || 'N' }}\"\n  }\n} ",
+        "jsonBody": "={\n  \"merge_fields\": {\n    \"FNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_First' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"LNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_Last' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"COMPANY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_Organization' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"BLDGCITY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.CITY }}\",\n    \"BLDGSIZE\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.BUILDING_SIZE }}\",\n    \"CLIENT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_client' + $('Extract Tab Index').item.json.tab_code] || 'N' }}\",\n    \"NWSLETR\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_newsletter' + $('Extract Tab Index').item.json.tab_code]  || 'N' }}\",\n    \"CLIENTGFT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_client_gift' + $('Extract Tab Index').item.json.tab_code]  || 'N' }}\",\n    \"XMASCARD\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_xmascard' + $('Extract Tab Index').item.json.tab_code]  || 'N' }}\",\n    \"MMERGE11\": \"Occupant\"\n  }\n} ",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -445,8 +449,33 @@
   "meta": {
     "templateCredsSetupCompleted": true
   },
-  "pinData": {},
-  "versionId": "efa0d211-395d-4b1c-b813-d92ba362bd9e",
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n.askaiagents.com",
+            "x-real-ip": "98.189.173.66",
+            "x-forwarded-for": "98.189.173.66",
+            "x-forwarded-proto": "https",
+            "connection": "upgrade",
+            "user-agent": "FileMaker/18.0",
+            "accept": "*/*",
+            "accept-encoding": "deflate, gzip"
+          },
+          "params": {},
+          "query": {
+            "recordID": "5514",
+            "field": "Occ_Organization1"
+          },
+          "body": {},
+          "webhookUrl": "https://n8n.askaiagents.com/webhook/sync-additional-contacts",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "versionId": "a0adc85a-d8a1-460a-8612-9d1506324c2c",
   "triggerCount": 1,
   "shared": [
     {
