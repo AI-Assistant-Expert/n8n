@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-09-03T17:26:17.654Z",
-  "updatedAt": "2025-09-25T19:24:19.000Z",
+  "updatedAt": "2025-09-30T19:10:56.000Z",
   "id": "S4AH072hNuJjJRoW",
   "name": "Sync Tenants data with mailchimp",
   "active": true,
@@ -14,8 +14,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -544,
-        -64
+        -288,
+        -80
       ],
       "id": "b8d01e79-43be-4af0-8cb1-a6edb6fd5f44",
       "name": "Webhook",
@@ -40,6 +40,10 @@
             {
               "name": "MMERGE6",
               "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData['COMPANY NAME'] }}"
+            },
+            {
+              "name": "MMERGE11",
+              "value": "Occupants"
             }
           ]
         }
@@ -47,8 +51,8 @@
       "type": "n8n-nodes-base.mailchimp",
       "typeVersion": 1,
       "position": [
-        1136,
-        -256
+        1712,
+        -96
       ],
       "id": "eaf5bc5c-b97e-4238-bdde-1bfdf9faade8",
       "name": "Create a member",
@@ -77,8 +81,8 @@
       "type": "n8n-nodes-base.filemaker",
       "typeVersion": 1,
       "position": [
-        1408,
-        -256
+        1984,
+        -96
       ],
       "id": "78e9fff7-ba27-4d9f-9e53-b7315b027dc3",
       "name": "FileMaker",
@@ -113,8 +117,8 @@
       "type": "n8n-nodes-base.filemaker",
       "typeVersion": 1,
       "position": [
-        -96,
-        -64
+        240,
+        -80
       ],
       "id": "04ef325b-2a0c-45fc-b882-7914d177f78b",
       "name": "Fetch Contact",
@@ -153,34 +157,11 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        336,
-        -64
+        832,
+        -80
       ],
       "id": "4ca16b68-e0c8-496e-a05b-2b2b33b15792",
       "name": "If"
-    },
-    {
-      "parameters": {
-        "url": "=https://us7.api.mailchimp.com/3.0/audiences/ac3e522bbb/contacts/{{ $json.response.data[0].fieldData.Property_MailchimpID }}",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "mailchimpApi",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        128,
-        -64
-      ],
-      "id": "d136b277-1f24-405a-8ce6-ed0eee113b93",
-      "name": "Mailchimp Member",
-      "credentials": {
-        "mailchimpApi": {
-          "id": "XnPzQvwuSbZyHilP",
-          "name": "Mailchimp account"
-        }
-      },
-      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -194,7 +175,7 @@
           "conditions": [
             {
               "id": "0dc86721-f5c3-48ab-a8b1-9df5b2350e1d",
-              "leftValue": "={{ $('Mailchimp Member').item.json.email_channel.email }}",
+              "leftValue": "={{ $('Get Mailchimp Member').item.json.email_channel.email }}",
               "rightValue": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.E_MAIL }}",
               "operator": {
                 "type": "string",
@@ -209,8 +190,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        672,
-        112
+        1248,
+        272
       ],
       "id": "b391d1e5-2aed-492c-9629-03924ef50b8f",
       "name": "Check if email is edited"
@@ -223,14 +204,14 @@
         "nodeCredentialType": "mailchimpApi",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"merge_fields\": {\n    \"FNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['FIRST NAME'] }}\",\n    \"LNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['LAST NAME'] }}\",\n    \"COMPANY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['COMPANY NAME'] }}\",\n    \"BLDGCITY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.CITY }}\",\n    \"BLDGSIZE\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.BUILDING_SIZE }}\",\n    \"CLIENT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData._CLIENT || 'N' }}\",\n    \"NWSLETR\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['MONTHLY NEWSLETTER'] || 'N'  }}\",\n    \"CLIENTGFT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Client Gift'] || 'N'  }}\",\n    \"XMASCARD\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['XMAS CARD LIST'] || 'N'  }}\",\n    \"LUMINARPH\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['PHONE #'] }}\"\n  }\n} ",
+        "jsonBody": "={\n  \"merge_fields\": {\n    \"FNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['FIRST NAME'] }}\",\n    \"LNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['LAST NAME'] }}\",\n    \"COMPANY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['COMPANY NAME'] }}\",\n    \"BLDGCITY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.CITY }}\",\n    \"BLDGSIZE\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.BUILDING_SIZE }}\",\n    \"CLIENT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData._CLIENT || 'N' }}\",\n    \"NWSLETR\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['MONTHLY NEWSLETTER'] || 'N'  }}\",\n    \"CLIENTGFT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Client Gift'] || 'N'  }}\",\n    \"XMASCARD\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['XMAS CARD LIST'] || 'N'  }}\",\n    \"LUMINARPH\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['PHONE #'] }}\",\n    \"MMERGE11\": \"Occupant\"\n  }\n} ",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1440,
-        336
+        2016,
+        496
       ],
       "id": "729d2fcf-93fd-4518-b6d6-e93edb921641",
       "name": "Update contact details",
@@ -255,8 +236,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1440,
-        64
+        2016,
+        224
       ],
       "id": "ee8bfe10-519d-4b45-99e8-3220bb1b703d",
       "name": "Update email",
@@ -274,12 +255,35 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        -304,
-        -64
+        -48,
+        -80
       ],
       "id": "f778fab7-7d84-436c-9cd9-b4155afb7cde",
       "name": "Wait",
       "webhookId": "75daf366-b187-449b-b82f-f59fa75076f2"
+    },
+    {
+      "parameters": {
+        "url": "=https://us7.api.mailchimp.com/3.0/audiences/ac3e522bbb/contacts/{{ $json.response.data[0].fieldData.Property_MailchimpID }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "mailchimpApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        528,
+        -80
+      ],
+      "id": "d136b277-1f24-405a-8ce6-ed0eee113b93",
+      "name": "Get Mailchimp Member",
+      "credentials": {
+        "mailchimpApi": {
+          "id": "XnPzQvwuSbZyHilP",
+          "name": "Mailchimp account"
+        }
+      },
+      "onError": "continueRegularOutput"
     }
   ],
   "connections": {
@@ -314,7 +318,7 @@
       "main": [
         [
           {
-            "node": "Mailchimp Member",
+            "node": "Get Mailchimp Member",
             "type": "main",
             "index": 0
           }
@@ -333,17 +337,6 @@
         [
           {
             "node": "Check if email is edited",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Mailchimp Member": {
-      "main": [
-        [
-          {
-            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -388,6 +381,17 @@
           }
         ]
       ]
+    },
+    "Get Mailchimp Member": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -403,8 +407,8 @@
         "json": {
           "headers": {
             "host": "n8n.askaiagents.com",
-            "x-real-ip": "43.249.184.67",
-            "x-forwarded-for": "43.249.184.67",
+            "x-real-ip": "75.82.64.244",
+            "x-forwarded-for": "75.82.64.244",
             "x-forwarded-proto": "https",
             "connection": "upgrade",
             "user-agent": "FileMaker/19.6",
@@ -413,7 +417,8 @@
           },
           "params": {},
           "query": {
-            "recordID": "9036"
+            "recordID": "6",
+            "layout": "Broker Input"
           },
           "body": {},
           "webhookUrl": "https://n8n.askaiagents.com/webhook/sync-property-contact",
@@ -422,7 +427,7 @@
       }
     ]
   },
-  "versionId": "f91cbd53-bada-4f18-a398-e1cf0ac149cb",
+  "versionId": "b4309da4-7ee2-4bab-af3f-872239368630",
   "triggerCount": 1,
   "shared": [
     {
