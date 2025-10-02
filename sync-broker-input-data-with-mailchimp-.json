@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-09-30T18:24:33.558Z",
-  "updatedAt": "2025-09-30T19:08:25.000Z",
+  "updatedAt": "2025-10-01T17:05:39.000Z",
   "id": "bVDyR4kLA3bHt0lK",
   "name": "Sync Broker Input data with mailchimp",
   "active": true,
@@ -89,7 +89,7 @@
       "credentials": {
         "fileMaker": {
           "id": "Y2ssJawBIauhCz3q",
-          "name": "FileMaker account 3"
+          "name": "FileMaker Johnston Pacific"
         }
       }
     },
@@ -125,7 +125,7 @@
       "credentials": {
         "fileMaker": {
           "id": "Y2ssJawBIauhCz3q",
-          "name": "FileMaker account 3"
+          "name": "FileMaker Johnston Pacific"
         }
       }
     },
@@ -410,7 +410,7 @@
       "credentials": {
         "fileMaker": {
           "id": "Y2ssJawBIauhCz3q",
-          "name": "FileMaker account 3"
+          "name": "FileMaker Johnston Pacific"
         }
       }
     },
@@ -613,7 +613,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "724af9b3-defb-4ea8-b917-5f529a6d412d",
+  "versionId": "fe0deaaa-823b-439a-8ac3-500774c41d36",
   "triggerCount": 1,
   "shared": [
     {
