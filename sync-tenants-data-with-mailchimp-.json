@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-09-03T17:26:17.654Z",
-  "updatedAt": "2025-09-30T19:10:56.000Z",
+  "updatedAt": "2025-10-02T17:12:10.000Z",
   "id": "S4AH072hNuJjJRoW",
   "name": "Sync Tenants data with mailchimp",
   "active": true,
@@ -44,6 +44,22 @@
             {
               "name": "MMERGE11",
               "value": "Occupants"
+            },
+            {
+              "name": "CLIENTGFT",
+              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData['Client Gift'] || 'N'  }}"
+            },
+            {
+              "name": "CLIENT",
+              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData._CLIENT || 'N' }}"
+            },
+            {
+              "name": "NWSLETR",
+              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData['MONTHLY NEWSLETTER'] || 'N'  }}"
+            },
+            {
+              "name": "=XMASCARD",
+              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData['XMAS CARD LIST'] || 'N'  }}"
             }
           ]
         }
@@ -89,7 +105,7 @@
       "credentials": {
         "fileMaker": {
           "id": "Y2ssJawBIauhCz3q",
-          "name": "FileMaker account 3"
+          "name": "FileMaker Johnston Pacific"
         }
       }
     },
@@ -125,7 +141,7 @@
       "credentials": {
         "fileMaker": {
           "id": "Y2ssJawBIauhCz3q",
-          "name": "FileMaker account 3"
+          "name": "FileMaker Johnston Pacific"
         }
       }
     },
@@ -427,7 +443,7 @@
       }
     ]
   },
-  "versionId": "b4309da4-7ee2-4bab-af3f-872239368630",
+  "versionId": "478eccca-8717-4bd0-809b-139a3e27fb15",
   "triggerCount": 1,
   "shared": [
     {
