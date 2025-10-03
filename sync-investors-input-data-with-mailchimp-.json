@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-10-01T16:37:16.822Z",
-  "updatedAt": "2025-10-01T17:54:38.000Z",
+  "updatedAt": "2025-10-02T17:38:56.000Z",
   "id": "4jsIMFB2xuOhLh1I",
   "name": "Sync Investors Input data with mailchimp",
   "active": true,
@@ -24,26 +24,42 @@
     {
       "parameters": {
         "list": "ac3e522bbb",
-        "email": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.E_MAIL }}",
+        "email": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.Email }}",
         "status": "subscribed",
         "options": {},
         "mergeFieldsUi": {
           "mergeFieldsValues": [
             {
               "name": "FNAME",
-              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData['FIRST NAME'] }}"
+              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.First_Name }}"
             },
             {
               "name": "LNAME",
-              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData['LAST NAME'] }}"
+              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.Last_Name }}"
             },
             {
               "name": "=MMERGE6",
-              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData['COMPANY NAME'] }}"
+              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.Company || '' }}"
             },
             {
               "name": "MMERGE11",
-              "value": "Broker"
+              "value": "Investor"
+            },
+            {
+              "name": "CLIENTGFT",
+              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData['Client Gift'] || 'N' }}"
+            },
+            {
+              "name": "NWSLETR",
+              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.Newsletter || 'N' }}"
+            },
+            {
+              "name": "=XMASCARD",
+              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.Xmas_Card || 'N'}}"
+            },
+            {
+              "name": "CLIENT",
+              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.Client || 'N' }}"
             }
           ]
         }
@@ -66,7 +82,7 @@
     {
       "parameters": {
         "action": "edit",
-        "layout": "Properties",
+        "layout": "Investor Input",
         "recid": "={{ $('Fetch Contact').item.json.response.data[0].recordId }}",
         "modId": 0,
         "fieldsParametersUi": {
@@ -88,24 +104,24 @@
       "name": "FileMaker",
       "credentials": {
         "fileMaker": {
-          "id": "ryD8qaQiHB0K3Vpm",
-          "name": "MTC Server FM"
+          "id": "Y2ssJawBIauhCz3q",
+          "name": "FileMaker Johnston Pacific"
         }
       }
     },
     {
       "parameters": {
         "action": "find",
-        "layout": "Investors",
-        "limit": 10,
-        "responseLayout": "Investors",
+        "layout": "Investor Input",
+        "limit": 1,
+        "responseLayout": "Investor Input",
         "queries": {
           "query": [
             {
               "fields": {
                 "field": [
                   {
-                    "name": "=InvestorID",
+                    "name": "=Investor_ID",
                     "value": "={{ $json.query.brokerId }}"
                   }
                 ]
@@ -176,7 +192,7 @@
             {
               "id": "0dc86721-f5c3-48ab-a8b1-9df5b2350e1d",
               "leftValue": "={{ $('Get Mailchimp Member').item.json.email_channel.email }}",
-              "rightValue": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.E_MAIL }}",
+              "rightValue": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.Email }}",
               "operator": {
                 "type": "string",
                 "operation": "notEquals"
@@ -204,7 +220,7 @@
         "nodeCredentialType": "mailchimpApi",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"merge_fields\": {\n    \"FNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['AGENTS FIRST NAME'] }}\",\n    \"LNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['LAST NAME'] }}\",\n    \"COMPANY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.BROKER }}\",\n    \"BLDGCITY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.CITY }}\",\n    \"MMERGE11\": \"Broker\"\n  }\n} ",
+        "jsonBody": "={\n  \"merge_fields\": {\n    \"FNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.First_Name }}\",\n    \"LNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.Last_Name }}\",\n    \"COMPANY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.Company }}\",\n    \"BLDGCITY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.City }}\",\n    \"CLIENT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.Client || 'N' }}\",\n    \"NWSLETR\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.Newsletter || 'N'  }}\",\n    \"CLIENTGFT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Client Gift'] || 'N'  }}\",\n    \"XMASCARD\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.Xmas_Card || 'N'  }}\",\n    \"MMERGE11\": \"Investor\"\n  }\n} ",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -230,7 +246,7 @@
         "nodeCredentialType": "mailchimpApi",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "=\n{\n  \"email_channel\": {\n      \"email\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.E_MAIL }}\",\n\"marketing_consent\": {\n\"status\": \"confirmed\"\n\n}\n  }\n}",
+        "jsonBody": "=\n{\n  \"email_channel\": {\n      \"email\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.Email }}\",\n\"marketing_consent\": {\n\"status\": \"confirmed\"\n\n}\n  }\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -329,7 +345,7 @@
           "parameters": [
             {
               "name": "query",
-              "value": "={{ $json.response.data[0].fieldData.E_MAIL }}"
+              "value": "={{ $json.response.data[0].fieldData.Email }}"
             }
           ]
         },
@@ -364,7 +380,7 @@
             {
               "id": "e0adfb1f-7730-4f24-83e1-5df1d4e1f9af",
               "leftValue": "={{ $json?.email_address || '' }}",
-              "rightValue": "={{ $('Fetch Contact')?.item?.json?.response?.data[0]?.fieldData?.E_MAIL || '' }}",
+              "rightValue": "={{ $('Fetch Contact').item?.json?.response?.data[0]?.fieldData?.Email || '' }}",
               "operator": {
                 "type": "string",
                 "operation": "equals"
@@ -387,7 +403,7 @@
     {
       "parameters": {
         "action": "edit",
-        "layout": "Broker Input",
+        "layout": "Investor Input",
         "recid": "={{ $('Fetch Contact').item.json.response.data[0].recordId }}",
         "modId": 0,
         "fieldsParametersUi": {
@@ -409,14 +425,14 @@
       "name": "Update existing mailchimp",
       "credentials": {
         "fileMaker": {
-          "id": "ryD8qaQiHB0K3Vpm",
-          "name": "MTC Server FM"
+          "id": "Y2ssJawBIauhCz3q",
+          "name": "FileMaker Johnston Pacific"
         }
       }
     },
     {
       "parameters": {
-        "value": "={{ $json.response.data[0].fieldData.E_MAIL }}"
+        "value": "={{ $json.response.data[0].fieldData.Email }}"
       },
       "type": "n8n-nodes-base.crypto",
       "typeVersion": 1,
@@ -622,13 +638,13 @@
             "x-forwarded-for": "75.82.64.244",
             "x-forwarded-proto": "https",
             "connection": "upgrade",
-            "user-agent": "FileMaker/17.0",
+            "user-agent": "FileMaker/19.6",
             "accept": "*/*",
             "accept-encoding": "deflate, gzip"
           },
           "params": {},
           "query": {
-            "brokerId": "1000",
+            "brokerId": "1008",
             "layout": "Investor Input"
           },
           "body": {},
@@ -638,7 +654,7 @@
       }
     ]
   },
-  "versionId": "28f1c491-dbbf-49bd-8913-be6b78e32879",
+  "versionId": "6b4ea36c-ff92-4d3e-a598-bbc602a272c2",
   "triggerCount": 1,
   "shared": [
     {
