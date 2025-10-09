@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-10-01T16:37:16.822Z",
-  "updatedAt": "2025-10-02T17:38:56.000Z",
+  "updatedAt": "2025-10-08T18:37:30.000Z",
   "id": "4jsIMFB2xuOhLh1I",
   "name": "Sync Investors Input data with mailchimp",
   "active": true,
@@ -38,7 +38,7 @@
               "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.Last_Name }}"
             },
             {
-              "name": "=MMERGE6",
+              "name": "=COMPANY",
               "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.Company || '' }}"
             },
             {
@@ -54,12 +54,12 @@
               "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.Newsletter || 'N' }}"
             },
             {
-              "name": "=XMASCARD",
-              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.Xmas_Card || 'N'}}"
-            },
-            {
               "name": "CLIENT",
               "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.Client || 'N' }}"
+            },
+            {
+              "name": "=XMASCARD",
+              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.Xmas_Card || 'N'  }}"
             }
           ]
         }
@@ -644,7 +644,7 @@
           },
           "params": {},
           "query": {
-            "brokerId": "1008",
+            "brokerId": "1000",
             "layout": "Investor Input"
           },
           "body": {},
@@ -654,7 +654,7 @@
       }
     ]
   },
-  "versionId": "6b4ea36c-ff92-4d3e-a598-bbc602a272c2",
+  "versionId": "95734d63-45e6-4863-a84f-a28322962fc5",
   "triggerCount": 1,
   "shared": [
     {
