@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-09-03T17:26:17.654Z",
-  "updatedAt": "2025-10-02T17:12:10.000Z",
+  "updatedAt": "2025-10-21T20:34:43.000Z",
   "id": "S4AH072hNuJjJRoW",
   "name": "Sync Tenants data with mailchimp",
   "active": true,
@@ -43,7 +43,7 @@
             },
             {
               "name": "MMERGE11",
-              "value": "Occupants"
+              "value": "Occupant"
             },
             {
               "name": "CLIENTGFT",
@@ -67,8 +67,8 @@
       "type": "n8n-nodes-base.mailchimp",
       "typeVersion": 1,
       "position": [
-        1712,
-        -96
+        1760,
+        -272
       ],
       "id": "eaf5bc5c-b97e-4238-bdde-1bfdf9faade8",
       "name": "Create a member",
@@ -77,7 +77,8 @@
           "id": "XnPzQvwuSbZyHilP",
           "name": "Mailchimp account"
         }
-      }
+      },
+      "onError": "continueErrorOutput"
     },
     {
       "parameters": {
@@ -97,8 +98,8 @@
       "type": "n8n-nodes-base.filemaker",
       "typeVersion": 1,
       "position": [
-        1984,
-        -96
+        2512,
+        -336
       ],
       "id": "78e9fff7-ba27-4d9f-9e53-b7315b027dc3",
       "name": "FileMaker",
@@ -133,7 +134,7 @@
       "type": "n8n-nodes-base.filemaker",
       "typeVersion": 1,
       "position": [
-        240,
+        160,
         -80
       ],
       "id": "04ef325b-2a0c-45fc-b882-7914d177f78b",
@@ -173,7 +174,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        832,
+        1120,
         -80
       ],
       "id": "4ca16b68-e0c8-496e-a05b-2b2b33b15792",
@@ -206,8 +207,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1248,
-        272
+        2208,
+        192
       ],
       "id": "b391d1e5-2aed-492c-9629-03924ef50b8f",
       "name": "Check if email is edited"
@@ -220,14 +221,14 @@
         "nodeCredentialType": "mailchimpApi",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"merge_fields\": {\n    \"FNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['FIRST NAME'] }}\",\n    \"LNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['LAST NAME'] }}\",\n    \"COMPANY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['COMPANY NAME'] }}\",\n    \"BLDGCITY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.CITY }}\",\n    \"BLDGSIZE\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.BUILDING_SIZE }}\",\n    \"CLIENT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData._CLIENT || 'N' }}\",\n    \"NWSLETR\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['MONTHLY NEWSLETTER'] || 'N'  }}\",\n    \"CLIENTGFT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Client Gift'] || 'N'  }}\",\n    \"XMASCARD\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['XMAS CARD LIST'] || 'N'  }}\",\n    \"LUMINARPH\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['PHONE #'] }}\",\n    \"MMERGE11\": \"Occupant\"\n  }\n} ",
+        "jsonBody": "={\n  \"merge_fields\": {\n    \"FNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['FIRST NAME'] }}\",\n    \"LNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['LAST NAME'] }}\",\n    \"COMPANY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['COMPANY NAME'] }}\",\n    \"BLDGCITY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.CITY }}\",\n    \"BLDGSIZE\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.BUILDING_SIZE }}\",\n    \"CLIENT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData._CLIENT.replace(/\\n/g, '').trim() || 'N' }}\",\n    \"NWSLETR\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['MONTHLY NEWSLETTER'].replace(/\\n/g, '').trim() || 'N'  }}\",\n    \"CLIENTGFT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Client Gift'] || 'N'  }}\",\n    \"XMASCARD\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['XMAS CARD LIST'].replace(/\\n/g, '').trim() || 'N'  }}\",\n    \"MMERGE11\": \"Occupant\"\n  }\n} ",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2016,
-        496
+        2512,
+        448
       ],
       "id": "729d2fcf-93fd-4518-b6d6-e93edb921641",
       "name": "Update contact details",
@@ -252,8 +253,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2016,
-        224
+        2512,
+        176
       ],
       "id": "ee8bfe10-519d-4b45-99e8-3220bb1b703d",
       "name": "Update email",
@@ -280,7 +281,7 @@
     },
     {
       "parameters": {
-        "url": "=https://us7.api.mailchimp.com/3.0/audiences/ac3e522bbb/contacts/{{ $json.response.data[0].fieldData.Property_MailchimpID }}",
+        "url": "=https://us7.api.mailchimp.com/3.0/audiences/ac3e522bbb/contacts/{{ $json.response.data[0].fieldData.Property_MailchimpID || \"undefined\" }}",
         "authentication": "predefinedCredentialType",
         "nodeCredentialType": "mailchimpApi",
         "options": {}
@@ -288,7 +289,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        528,
+        880,
         -80
       ],
       "id": "d136b277-1f24-405a-8ce6-ed0eee113b93",
@@ -300,6 +301,182 @@
         }
       },
       "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ae807aec-c8bf-4822-96d3-8e0ffa88d991",
+              "leftValue": "={{ $json?.error }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2208,
+        -96
+      ],
+      "id": "120fc61e-25f6-4a05-8852-6b85d28a712c",
+      "name": "ID missing"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5bd333cb-b65e-4cdd-b1d7-08afeefed6ba",
+              "leftValue": "={{ $json.response.data[0].fieldData.Property_MailchimpID }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        432,
+        -80
+      ],
+      "id": "1047b559-e508-4a66-825b-128674f5c33e",
+      "name": "Mailchimp ID in Filemaker Exist"
+    },
+    {
+      "parameters": {
+        "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.E_MAIL }}"
+      },
+      "type": "n8n-nodes-base.crypto",
+      "typeVersion": 1,
+      "position": [
+        816,
+        240
+      ],
+      "id": "c617b59e-c4fc-45dc-be38-e966db2a4ad5",
+      "name": "Crypto"
+    },
+    {
+      "parameters": {
+        "url": "=https://us7.api.mailchimp.com/3.0/lists/ac3e522bbb/members/{{ $json.data }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "mailchimpApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "={{ $json.response.data[0].fieldData.Email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1104,
+        464
+      ],
+      "id": "24b931d9-7aed-45a6-be34-4c4fb173ee2a",
+      "name": "Search Mailchimp Email Exist",
+      "credentials": {
+        "mailchimpApi": {
+          "id": "XnPzQvwuSbZyHilP",
+          "name": "Mailchimp account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e0adfb1f-7730-4f24-83e1-5df1d4e1f9af",
+              "leftValue": "={{ $json?.email_address || '' }}",
+              "rightValue": "={{ $('Fetch Contact').item?.json?.response?.data[0]?.fieldData?.Email || '' }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1392,
+        464
+      ],
+      "id": "b2e4a427-be5d-405a-88aa-d1ad9aa0f475",
+      "name": "Mailchimp User Exist"
+    },
+    {
+      "parameters": {
+        "action": "edit",
+        "layout": "Properties",
+        "recid": "={{ $('Fetch Contact').item.json.response.data[0].recordId }}",
+        "modId": 0,
+        "fieldsParametersUi": {
+          "fields": [
+            {
+              "name": "=Property_MailchimpID",
+              "value": "={{ $json.contact_id }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.filemaker",
+      "typeVersion": 1,
+      "position": [
+        1792,
+        800
+      ],
+      "id": "e889adb6-2b4c-4b1d-ad0b-c9b5318ff1c8",
+      "name": "Update existing mailchimp",
+      "credentials": {
+        "fileMaker": {
+          "id": "Y2ssJawBIauhCz3q",
+          "name": "FileMaker Johnston Pacific"
+        }
+      }
     }
   ],
   "connections": {
@@ -327,6 +504,13 @@
             "type": "main",
             "index": 0
           }
+        ],
+        [
+          {
+            "node": "ID missing",
+            "type": "main",
+            "index": 0
+          }
         ]
       ]
     },
@@ -334,7 +518,7 @@
       "main": [
         [
           {
-            "node": "Get Mailchimp Member",
+            "node": "Mailchimp ID in Filemaker Exist",
             "type": "main",
             "index": 0
           }
@@ -408,6 +592,75 @@
           }
         ]
       ]
+    },
+    "Mailchimp ID in Filemaker Exist": {
+      "main": [
+        [
+          {
+            "node": "Get Mailchimp Member",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Crypto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crypto": {
+      "main": [
+        [
+          {
+            "node": "Search Mailchimp Email Exist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Mailchimp Email Exist": {
+      "main": [
+        [
+          {
+            "node": "Mailchimp User Exist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mailchimp User Exist": {
+      "main": [
+        [
+          {
+            "node": "Create a member",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update existing mailchimp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update existing mailchimp": {
+      "main": [
+        [
+          {
+            "node": "Fetch Contact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -433,8 +686,8 @@
           },
           "params": {},
           "query": {
-            "recordID": "6",
-            "layout": "Broker Input"
+            "recordID": "1694",
+            "layout": "Property Input"
           },
           "body": {},
           "webhookUrl": "https://n8n.askaiagents.com/webhook/sync-property-contact",
@@ -443,7 +696,7 @@
       }
     ]
   },
-  "versionId": "478eccca-8717-4bd0-809b-139a3e27fb15",
+  "versionId": "e78369a0-af9a-4ac2-ad9d-b0b9165d5e98",
   "triggerCount": 1,
   "shared": [
     {
