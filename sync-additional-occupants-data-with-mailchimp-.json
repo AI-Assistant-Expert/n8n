@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-09-24T18:27:31.937Z",
-  "updatedAt": "2025-10-21T21:03:05.000Z",
+  "updatedAt": "2025-10-22T19:29:16.000Z",
   "id": "fojVVANDW7b0JKTu",
   "name": "Sync Additional Occupants data with mailchimp",
   "active": true,
@@ -401,7 +401,7 @@
             {
               "id": "e0adfb1f-7730-4f24-83e1-5df1d4e1f9af",
               "leftValue": "={{ $json?.email_address || '' }}",
-              "rightValue": "={{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_Email' + $('Extract Tab Index').item.json.tab_code] }}",
+              "rightValue": "={{ $('Fetch Contact').item.json.response.data[0].fieldData['Inv_Email' + $('Extract Tab Index').item.json.tab_code] }}",
               "operator": {
                 "type": "string",
                 "operation": "equals"
@@ -687,7 +687,7 @@
       }
     ]
   },
-  "versionId": "309607da-0851-4ccf-ac8e-3ca75f817697",
+  "versionId": "83cac9d4-f32d-4b0e-93cf-6359993f0aed",
   "triggerCount": 1,
   "shared": [
     {
