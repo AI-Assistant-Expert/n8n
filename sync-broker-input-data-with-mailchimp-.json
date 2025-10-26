@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-09-30T18:24:33.558Z",
-  "updatedAt": "2025-10-01T17:05:39.000Z",
+  "updatedAt": "2025-10-25T19:25:13.000Z",
   "id": "bVDyR4kLA3bHt0lK",
   "name": "Sync Broker Input data with mailchimp",
   "active": true,
@@ -416,7 +416,7 @@
     },
     {
       "parameters": {
-        "value": "={{ $json.response.data[0].fieldData.E_MAIL }}"
+        "value": "={{ $json.response.data[0].fieldData.E_MAIL?.replace(/\\n/g, '').trim() }}"
       },
       "type": "n8n-nodes-base.crypto",
       "typeVersion": 1,
@@ -613,7 +613,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "fe0deaaa-823b-439a-8ac3-500774c41d36",
+  "versionId": "db26e76f-bee5-4c80-b2cc-85718630403c",
   "triggerCount": 1,
   "shared": [
     {
