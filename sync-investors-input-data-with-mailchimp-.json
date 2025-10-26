@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-10-01T16:37:16.822Z",
-  "updatedAt": "2025-10-21T20:37:08.000Z",
+  "updatedAt": "2025-10-25T19:24:58.000Z",
   "id": "4jsIMFB2xuOhLh1I",
   "name": "Sync Investors Input data with mailchimp",
   "active": true,
@@ -220,7 +220,7 @@
         "nodeCredentialType": "mailchimpApi",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"merge_fields\": {\n    \"FNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.First_Name }}\",\n    \"LNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.Last_Name }}\",\n    \"COMPANY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.Company }}\",\n    \"BLDGCITY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.City }}\",\n    \"CLIENT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.Client.replace(/\\n/g, '').trim() || 'N' }}\",\n    \"NWSLETR\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.Newsletter.replace(/\\n/g, '').trim() || 'N'  }}\",\n    \"CLIENTGFT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Client Gift'].replace(/\\n/g, '').trim() || 'N'  }}\",\n    \"XMASCARD\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.Xmas_Card.replace(/\\n/g, '').trim() || 'N'  }}\",\n    \"MMERGE11\": \"Investor\"\n  }\n} ",
+        "jsonBody": "={\n  \"merge_fields\": {\n    \"FNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.First_Name }}\",\n    \"LNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.Last_Name }}\",\n    \"COMPANY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.Company }}\",\n    \"BLDGCITY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.City }}\",\n    \"CLIENT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.Client?.replace(/\\n/g, '').trim() || 'N' }}\",\n    \"NWSLETR\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.Newsletter?.replace(/\\n/g, '').trim() || 'N'  }}\",\n    \"CLIENTGFT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Client Gift']?.replace(/\\n/g, '').trim() || 'N'  }}\",\n    \"XMASCARD\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.Xmas_Card?.replace(/\\n/g, '').trim() || 'N'  }}\",\n    \"MMERGE11\": \"Investor\"\n  }\n} ",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -432,7 +432,7 @@
     },
     {
       "parameters": {
-        "value": "={{ $json.response.data[0].fieldData.Email }}"
+        "value": "={{ $json.response.data[0].fieldData.Email?.replace(/\\n/g, '').trim() }}"
       },
       "type": "n8n-nodes-base.crypto",
       "typeVersion": 1,
@@ -654,7 +654,7 @@
       }
     ]
   },
-  "versionId": "9ed783c4-11fd-453f-9a38-86e248fd5114",
+  "versionId": "4d30f52d-d065-4bb5-9822-f69ffb68e03a",
   "triggerCount": 1,
   "shared": [
     {
