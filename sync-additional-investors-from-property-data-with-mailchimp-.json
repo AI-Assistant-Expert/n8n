@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-10-02T17:41:54.221Z",
-  "updatedAt": "2025-10-22T19:51:04.000Z",
+  "updatedAt": "2025-10-25T18:52:58.000Z",
   "id": "91gBA4Fw8O8YdYOb",
   "name": "Sync Additional Investors from Property data with Mailchimp",
   "active": true,
@@ -217,7 +217,7 @@
         "nodeCredentialType": "mailchimpApi",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"merge_fields\": {\n    \"FNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Inv_First' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"LNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Inv_Last' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"COMPANY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Inv_Organization' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"BLDGCITY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.CITY }}\",\n    \"BLDGSIZE\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.BUILDING_SIZE }}\",\n    \"CLIENT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Inv_client' + $('Extract Tab Index').item.json.tab_code] || 'N' }}\",\n    \"NWSLETR\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Inv_newsletter' + $('Extract Tab Index').item.json.tab_code]  || 'N' }}\",\n    \"CLIENTGFT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Inv_client_gift' + $('Extract Tab Index').item.json.tab_code]  || 'N' }}\",\n    \"XMASCARD\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Inv_xmascard' + $('Extract Tab Index').item.json.tab_code]  || 'N' }}\",\n    \"MMERGE11\": \"Investor\"\n  }\n} ",
+        "jsonBody": "={\n  \"merge_fields\": {\n    \"FNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Inv_First' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"LNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Inv_Last' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"COMPANY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Inv_Organization' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"BLDGCITY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.CITY }}\",\n    \"BLDGSIZE\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.BUILDING_SIZE }}\",\n    \"CLIENT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Inv_client' + $('Extract Tab Index').item.json.tab_code]?.replace(/\\n/g, '').trim() || 'N' }}\",\n    \"NWSLETR\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Inv_newsletter' + $('Extract Tab Index').item.json.tab_code]?.replace(/\\n/g, '').trim()  || 'N' }}\",\n    \"CLIENTGFT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Inv_client_gift' + $('Extract Tab Index').item.json.tab_code]?.replace(/\\n/g, '').trim()  || 'N' }}\",\n    \"XMASCARD\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Inv_xmascard' + $('Extract Tab Index').item.json.tab_code]?.replace(/\\n/g, '').trim()  || 'N' }}\",\n    \"MMERGE11\": \"Investor\"\n  }\n} ",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -666,8 +666,8 @@
         "json": {
           "headers": {
             "host": "n8n.askaiagents.com",
-            "x-real-ip": "185.205.247.65",
-            "x-forwarded-for": "185.205.247.65",
+            "x-real-ip": "75.82.64.244",
+            "x-forwarded-for": "75.82.64.244",
             "x-forwarded-proto": "https",
             "connection": "upgrade",
             "user-agent": "FileMaker/19.6",
@@ -676,8 +676,8 @@
           },
           "params": {},
           "query": {
-            "recordID": "9046",
-            "field": "Inv_Client1",
+            "recordID": "2397",
+            "field": "Inv_Organization1",
             "layout": "Property Input"
           },
           "body": {},
@@ -687,7 +687,7 @@
       }
     ]
   },
-  "versionId": "ef81f7fa-0e58-4d15-a193-22eac1629f4b",
+  "versionId": "946d05ce-de50-40ed-bb1f-430555556560",
   "triggerCount": 1,
   "shared": [
     {
