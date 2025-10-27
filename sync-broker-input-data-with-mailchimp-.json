@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-09-30T18:24:33.558Z",
-  "updatedAt": "2025-10-25T19:25:13.000Z",
+  "updatedAt": "2025-10-26T18:24:01.000Z",
   "id": "bVDyR4kLA3bHt0lK",
   "name": "Sync Broker Input data with mailchimp",
   "active": true,
@@ -106,7 +106,7 @@
                 "field": [
                   {
                     "name": "=Broker_ID",
-                    "value": "={{ $json.query.brokerId }}"
+                    "value": "={{ $('Webhook').item.json.query.brokerId }}"
                   }
                 ]
               }
@@ -613,7 +613,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "db26e76f-bee5-4c80-b2cc-85718630403c",
+  "versionId": "92cd6b56-170d-4c6a-9b76-ec7596fc1202",
   "triggerCount": 1,
   "shared": [
     {
