@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-09-24T18:27:31.937Z",
-  "updatedAt": "2025-10-25T19:24:45.000Z",
+  "updatedAt": "2025-10-26T18:18:48.000Z",
   "id": "fojVVANDW7b0JKTu",
   "name": "Sync Additional Occupants data with mailchimp",
   "active": true,
@@ -130,7 +130,7 @@
                 "field": [
                   {
                     "name": "Property_ID",
-                    "value": "={{ $json.query.recordID }}"
+                    "value": "={{ $('Webhook').item.json.query.recordID }}"
                   }
                 ]
               }
@@ -666,8 +666,8 @@
         "json": {
           "headers": {
             "host": "n8n.askaiagents.com",
-            "x-real-ip": "75.82.64.244",
-            "x-forwarded-for": "75.82.64.244",
+            "x-real-ip": "5.182.16.117",
+            "x-forwarded-for": "5.182.16.117",
             "x-forwarded-proto": "https",
             "connection": "upgrade",
             "user-agent": "FileMaker/19.6",
@@ -676,8 +676,8 @@
           },
           "params": {},
           "query": {
-            "recordID": "578",
-            "field": "Occ_client1",
+            "recordID": "9036",
+            "field": "Occ_newsletter1",
             "layout": "Occupants"
           },
           "body": {},
@@ -687,7 +687,7 @@
       }
     ]
   },
-  "versionId": "be21e487-03ea-4dd7-b832-792b3ff7e70c",
+  "versionId": "269bf6e2-d548-4968-8733-75ad45dc9614",
   "triggerCount": 1,
   "shared": [
     {
