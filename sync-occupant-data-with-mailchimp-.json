@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-09-03T17:26:17.654Z",
-  "updatedAt": "2025-10-25T19:23:54.000Z",
+  "updatedAt": "2025-10-26T18:19:18.000Z",
   "id": "S4AH072hNuJjJRoW",
   "name": "Sync Occupant data with mailchimp",
   "active": true,
@@ -123,7 +123,7 @@
                 "field": [
                   {
                     "name": "Property_ID",
-                    "value": "={{ $json.query.recordID }}"
+                    "value": "={{ $('Webhook').item.json.query.recordID }}"
                   }
                 ]
               }
@@ -686,7 +686,7 @@
           },
           "params": {},
           "query": {
-            "recordID": "24",
+            "recordID": "40",
             "layout": "Property Input"
           },
           "body": {},
@@ -696,7 +696,7 @@
       }
     ]
   },
-  "versionId": "0e679954-32c7-4589-b4a0-74d82eda8221",
+  "versionId": "f0f1e1af-0e8c-49cd-9f42-a7cbfb23450d",
   "triggerCount": 1,
   "shared": [
     {
