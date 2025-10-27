@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-10-01T16:37:16.822Z",
-  "updatedAt": "2025-10-25T19:24:58.000Z",
+  "updatedAt": "2025-10-26T18:17:11.000Z",
   "id": "4jsIMFB2xuOhLh1I",
   "name": "Sync Investors Input data with mailchimp",
   "active": true,
@@ -122,7 +122,7 @@
                 "field": [
                   {
                     "name": "=Investor_ID",
-                    "value": "={{ $json.query.brokerId }}"
+                    "value": "={{ $('Webhook').item.json.query.brokerId }}"
                   }
                 ]
               }
@@ -644,7 +644,7 @@
           },
           "params": {},
           "query": {
-            "brokerId": "1000",
+            "brokerId": "1010",
             "layout": "Investor Input"
           },
           "body": {},
@@ -654,7 +654,7 @@
       }
     ]
   },
-  "versionId": "4d30f52d-d065-4bb5-9822-f69ffb68e03a",
+  "versionId": "f4b09ae1-96c0-4090-900e-acbe09a04451",
   "triggerCount": 1,
   "shared": [
     {
