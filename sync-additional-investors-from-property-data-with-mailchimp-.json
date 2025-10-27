@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-10-02T17:41:54.221Z",
-  "updatedAt": "2025-10-25T18:52:58.000Z",
+  "updatedAt": "2025-10-26T18:15:48.000Z",
   "id": "91gBA4Fw8O8YdYOb",
   "name": "Sync Additional Investors from Property data with Mailchimp",
   "active": true,
@@ -130,7 +130,7 @@
                 "field": [
                   {
                     "name": "Property_ID",
-                    "value": "={{ $json.query.recordID }}"
+                    "value": "={{ $('Webhook').item.json.query.recordID }}"
                   }
                 ]
               }
@@ -666,8 +666,8 @@
         "json": {
           "headers": {
             "host": "n8n.askaiagents.com",
-            "x-real-ip": "75.82.64.244",
-            "x-forwarded-for": "75.82.64.244",
+            "x-real-ip": "5.182.16.117",
+            "x-forwarded-for": "5.182.16.117",
             "x-forwarded-proto": "https",
             "connection": "upgrade",
             "user-agent": "FileMaker/19.6",
@@ -676,8 +676,8 @@
           },
           "params": {},
           "query": {
-            "recordID": "2397",
-            "field": "Inv_Organization1",
+            "recordID": "9046",
+            "field": "Inv_First3",
             "layout": "Property Input"
           },
           "body": {},
@@ -687,7 +687,7 @@
       }
     ]
   },
-  "versionId": "946d05ce-de50-40ed-bb1f-430555556560",
+  "versionId": "4817563c-8542-4e22-99b4-4c054468e51b",
   "triggerCount": 1,
   "shared": [
     {
