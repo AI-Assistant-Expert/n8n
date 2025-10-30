@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-09-24T18:27:31.937Z",
-  "updatedAt": "2025-10-26T18:18:48.000Z",
+  "updatedAt": "2025-10-29T16:44:25.000Z",
   "id": "fojVVANDW7b0JKTu",
   "name": "Sync Additional Occupants data with mailchimp",
   "active": true,
@@ -43,7 +43,7 @@
             },
             {
               "name": "BLDGSIZE",
-              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData.BUILDING_SIZE }}"
+              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData['Unit sf'] }}"
             },
             {
               "name": "=BLDGCITY",
@@ -217,7 +217,7 @@
         "nodeCredentialType": "mailchimpApi",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"merge_fields\": {\n    \"FNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_First' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"LNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_Last' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"COMPANY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_Organization' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"BLDGCITY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.CITY }}\",\n    \"BLDGSIZE\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.BUILDING_SIZE }}\",\n    \"CLIENT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_client' + $('Extract Tab Index').item.json.tab_code]?.replace(/\\n/g, '').trim() || 'N' }}\",\n    \"NWSLETR\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_newsletter' + $('Extract Tab Index').item.json.tab_code]?.replace(/\\n/g, '').trim()  || 'N' }}\",\n    \"CLIENTGFT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_client_gift' + $('Extract Tab Index').item.json.tab_code]?.replace(/\\n/g, '').trim()  || 'N' }}\",\n    \"XMASCARD\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_xmascard' + $('Extract Tab Index').item.json.tab_code]?.replace(/\\n/g, '').trim()  || 'N' }}\",\n    \"MMERGE11\": \"Occupant\"\n  }\n} ",
+        "jsonBody": "={\n  \"merge_fields\": {\n    \"FNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_First' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"LNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_Last' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"COMPANY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_Organization' + $('Extract Tab Index').item.json.tab_code] }}\",\n    \"BLDGCITY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.CITY }}\",\n    \"BLDGSIZE\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Unit sf'] }}\",\n    \"CLIENT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_client' + $('Extract Tab Index').item.json.tab_code]?.replace(/\\n/g, '').trim() || 'N' }}\",\n    \"NWSLETR\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_newsletter' + $('Extract Tab Index').item.json.tab_code]?.replace(/\\n/g, '').trim()  || 'N' }}\",\n    \"CLIENTGFT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_client_gift' + $('Extract Tab Index').item.json.tab_code]?.replace(/\\n/g, '').trim()  || 'N' }}\",\n    \"XMASCARD\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Occ_xmascard' + $('Extract Tab Index').item.json.tab_code]?.replace(/\\n/g, '').trim()  || 'N' }}\",\n    \"MMERGE11\": \"Occupant\"\n  }\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -687,7 +687,7 @@
       }
     ]
   },
-  "versionId": "269bf6e2-d548-4968-8733-75ad45dc9614",
+  "versionId": "2b74bf59-1ad7-4d3f-a571-fb93e3dd7826",
   "triggerCount": 1,
   "shared": [
     {
