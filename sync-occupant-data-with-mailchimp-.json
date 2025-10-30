@@ -1,6 +1,6 @@
 {
   "createdAt": "2025-09-03T17:26:17.654Z",
-  "updatedAt": "2025-10-26T18:19:18.000Z",
+  "updatedAt": "2025-10-29T16:43:23.000Z",
   "id": "S4AH072hNuJjJRoW",
   "name": "Sync Occupant data with mailchimp",
   "active": true,
@@ -60,6 +60,10 @@
             {
               "name": "=XMASCARD",
               "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData['XMAS CARD LIST'] || 'N'  }}"
+            },
+            {
+              "name": "BLDGSIZE",
+              "value": "={{ $('Fetch Contact').item.json.response.data[0].fieldData?.['Unit sf'] }}"
             }
           ]
         }
@@ -221,7 +225,7 @@
         "nodeCredentialType": "mailchimpApi",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"merge_fields\": {\n    \"FNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['FIRST NAME'] }}\",\n    \"LNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['LAST NAME'] }}\",\n    \"COMPANY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['COMPANY NAME'] }}\",\n    \"BLDGCITY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.CITY }}\",\n    \"BLDGSIZE\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.BUILDING_SIZE }}\",\n    \"CLIENT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData._CLIENT?.replace(/\\n/g, '').trim() || 'N' }}\",\n    \"NWSLETR\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['MONTHLY NEWSLETTER']?.replace(/\\n/g, '').trim() || 'N'  }}\",\n    \"CLIENTGFT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Client Gift']?.replace(/\\n/g, '').trim() || 'N'  }}\",\n    \"XMASCARD\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['XMAS CARD LIST']?.replace(/\\n/g, '').trim() || 'N'  }}\",\n    \"MMERGE11\": \"Occupant\"\n  }\n} ",
+        "jsonBody": "={\n  \"merge_fields\": {\n    \"FNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['FIRST NAME'] }}\",\n    \"LNAME\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['LAST NAME'] }}\",\n    \"COMPANY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['COMPANY NAME'] }}\",\n    \"BLDGCITY\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData.CITY }}\",\n    \"BLDGSIZE\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Unit sf'] }}\",\n    \"CLIENT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData._CLIENT?.replace(/\\n/g, '').trim() || 'N' }}\",\n    \"NWSLETR\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['MONTHLY NEWSLETTER']?.replace(/\\n/g, '').trim() || 'N'  }}\",\n    \"CLIENTGFT\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['Client Gift']?.replace(/\\n/g, '').trim() || 'N'  }}\",\n    \"XMASCARD\": \"{{ $('Fetch Contact').item.json.response.data[0].fieldData['XMAS CARD LIST']?.replace(/\\n/g, '').trim() || 'N'  }}\",\n    \"MMERGE11\": \"Occupant\"\n  }\n} ",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -686,7 +690,7 @@
           },
           "params": {},
           "query": {
-            "recordID": "40",
+            "recordID": "24",
             "layout": "Property Input"
           },
           "body": {},
@@ -696,7 +700,7 @@
       }
     ]
   },
-  "versionId": "f0f1e1af-0e8c-49cd-9f42-a7cbfb23450d",
+  "versionId": "2594df8c-9d20-4854-b94c-173442921a2a",
   "triggerCount": 1,
   "shared": [
     {
